@@ -19,7 +19,7 @@ jobs:
         run: uv run --all-groups --python ${{ matrix.python-version }} pytest --cov=cardio_risk_rf --cov-report=xml --cov-fail-under=10
       - name: Upload coverage artifact
         if: matrix.python-version == '3.13'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: coverage-xml
           path: coverage.xml
