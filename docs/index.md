@@ -1,6 +1,8 @@
 # cardio-risk-rf
 
-Production-grade tabular cardiovascular-risk classifier on the Framingham Heart Study — 10-year coronary heart disease risk prediction with LightGBM (main) and RandomForest (baseline), served through FastAPI with per-patient SHAP explanations.
+![cardio-risk-rf banner](images/banner.jpg)
+
+Production-grade tabular cardiovascular-risk classifier on the Framingham Heart Study - 10-year coronary heart disease risk prediction with LightGBM (main) and RandomForest (baseline), served through FastAPI with per-patient SHAP explanations.
 
 ## At a glance
 
@@ -23,6 +25,20 @@ Production-grade tabular cardiovascular-risk classifier on the Framingham Heart 
 - Hugging Face model: [kiselyovd/cardio-risk-rf](https://huggingface.co/kiselyovd/cardio-risk-rf)
 - Russian README: [README.ru.md](https://github.com/kiselyovd/cardio-risk-rf/blob/main/README.ru.md)
 - Template: [kiselyovd/ml-project-template](https://github.com/kiselyovd/ml-project-template)
+
+## Visualizations
+
+![ROC and PR curves](images/roc_pr.png)
+
+ROC and Precision-Recall curves on the held-out test split - LightGBM (main) vs RandomForest (baseline).
+
+![SHAP summary](images/shap_summary.png)
+
+Global SHAP summary for the main LightGBM model - per-feature impact on the 10-year CHD risk prediction.
+
+![Calibration curve](images/calibration.png)
+
+Reliability (calibration) curve on the validation split - predicted probability vs observed frequency.
 
 ## Intended use and disclaimer
 

@@ -7,6 +7,8 @@
 [![Python 3.12+](https://img.shields.io/badge/Python-3.12%20%7C%203.13-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![HF Hub](https://img.shields.io/badge/🤗%20HF%20Hub-model-FFD21E?style=for-the-badge)](https://huggingface.co/kiselyovd/cardio-risk-rf)
 
+![cardio-risk-rf banner](docs/images/banner.jpg)
+
 Production-grade tabular cardiovascular-risk classifier on the Framingham Heart Study (4240 patients, 10-year CHD). Main model **LightGBM** with native NaN handling and SHAP explainability; baseline **RandomForest** with median imputation. Hydra-configured, Optuna-tuned, evaluated with ROC-AUC / PR-AUC / F1 / Brier + calibration plot, served by FastAPI as `/predict` with local SHAP top-5, distributed through Hugging Face Hub and MkDocs Material.
 
 > **Part of the [kiselyovd ML portfolio](https://github.com/kiselyovd#ml-portfolio)** — production-grade ML projects sharing one [cookiecutter template](https://github.com/kiselyovd/ml-project-template).
@@ -25,14 +27,24 @@ Filled in from `reports/metrics_summary.json` once the v0.1.0 run completes.
 
 | Model | ROC-AUC | PR-AUC | F1 @ 0.5 | F1 @ t\* | Brier | t\* |
 |---|---|---|---|---|---|---|
-| **LightGBM** (main) | **79.8%** | **78.1%** | 71.9% | **73.8%** | 0.182 | 0.33 |
+| **LightGBM** (main) | **79.8%** | **78.4%** | 71.7% | **73.9%** | 0.182 | 0.35 |
 | RandomForest (baseline) | 79.5% | 77.9% | 70.8% | 73.2% | 0.184 | 0.41 |
 
 Metrics on held-out test split (n=10 501, balanced target, sulianova Cardiovascular Disease Dataset). F1 reported at both the default 0.5 threshold and at the validation-set optimal threshold t\*. Calibration plot on val → `reports/calibration.png`; F1-optimal thresholds saved to `reports/metrics_thresholded.json`.
 
-### Global SHAP (main model)
+## Visualizations
+
+![ROC and PR curves](docs/images/roc_pr.png)
+
+ROC and Precision-Recall curves on the held-out test split - LightGBM (main) vs RandomForest (baseline).
 
 ![SHAP summary](docs/images/shap_summary.png)
+
+Global SHAP summary for the main LightGBM model - per-feature impact on the 10-year CHD risk prediction.
+
+![Calibration curve](docs/images/calibration.png)
+
+Reliability (calibration) curve on the validation split - predicted probability vs observed frequency.
 
 ## Quick Start
 
