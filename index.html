@@ -67,7 +67,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="pink">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="cyan" data-md-color-accent="cyan">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -123,7 +123,7 @@
     
     
     
-    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="red" data-md-color-accent="pink"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="cyan" data-md-color-accent="cyan"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
     
       <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
@@ -133,7 +133,7 @@
     
     
     
-    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="red" data-md-color-accent="pink"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="cyan" data-md-color-accent="cyan"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
     
       <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
@@ -461,6 +461,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#visualizations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visualizations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#intended-use-and-disclaimer" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -608,7 +619,8 @@
 
 
 <h1 id="cardio-risk-rf">cardio-risk-rf</h1>
-<p>Production-grade tabular cardiovascular-risk classifier on the Framingham Heart Study — 10-year coronary heart disease risk prediction with LightGBM (main) and RandomForest (baseline), served through FastAPI with per-patient SHAP explanations.</p>
+<p><img alt="cardio-risk-rf banner" src="images/banner.jpg" /></p>
+<p>Production-grade tabular cardiovascular-risk classifier on the Framingham Heart Study - 10-year coronary heart disease risk prediction with LightGBM (main) and RandomForest (baseline), served through FastAPI with per-patient SHAP explanations.</p>
 <h2 id="at-a-glance">At a glance</h2>
 <ul>
 <li><strong>Dataset:</strong> <a href="https://www.kaggle.com/datasets/sulianova/cardiovascular-disease-dataset">sulianova Cardiovascular Disease Dataset</a> — 70 000 patients × 11 clinical features, balanced target <code>cardio</code> (~50/50), stratified 70/15/15 split. Framingham (4240 rows) kept as secondary benchmark cohort.</li>
@@ -631,6 +643,13 @@
 <li>Russian README: <a href="https://github.com/kiselyovd/cardio-risk-rf/blob/main/README.ru.md">README.ru.md</a></li>
 <li>Template: <a href="https://github.com/kiselyovd/ml-project-template">kiselyovd/ml-project-template</a></li>
 </ul>
+<h2 id="visualizations">Visualizations</h2>
+<p><img alt="ROC and PR curves" src="images/roc_pr.png" /></p>
+<p>ROC and Precision-Recall curves on the held-out test split - LightGBM (main) vs RandomForest (baseline).</p>
+<p><img alt="SHAP summary" src="images/shap_summary.png" /></p>
+<p>Global SHAP summary for the main LightGBM model - per-feature impact on the 10-year CHD risk prediction.</p>
+<p><img alt="Calibration curve" src="images/calibration.png" /></p>
+<p>Reliability (calibration) curve on the validation split - predicted probability vs observed frequency.</p>
 <h2 id="intended-use-and-disclaimer">Intended use and disclaimer</h2>
 <p>This model is a <strong>portfolio/research demo</strong> trained on the public Framingham Heart Study subset. It is <strong>not a medical device</strong> and must not be used for clinical decision-making, diagnosis, or patient-facing risk communication. Calibration, fairness, and distribution shift have not been validated outside the original cohort. Use only for educational purposes, ML-engineering review, and to compare against other baselines on the same dataset.</p>
 
