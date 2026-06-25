@@ -536,7 +536,7 @@
   <a href="#request-patientfeatures" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Request — PatientFeatures
+        Request - PatientFeatures
       
     </span>
   </a>
@@ -547,7 +547,7 @@
   <a href="#response-predictionresponse" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Response — PredictionResponse
+        Response - PredictionResponse
       
     </span>
   </a>
@@ -653,7 +653,7 @@ docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </
 <tr>
 <td><code>GET</code></td>
 <td><code>/health</code></td>
-<td>Liveness probe — returns <code>{"status": "ok", "version": &lt;model_version&gt;}</code>.</td>
+<td>Liveness probe - returns <code>{"status": "ok", "version": &lt;model_version&gt;}</code>.</td>
 </tr>
 <tr>
 <td><code>POST</code></td>
@@ -663,17 +663,17 @@ docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </
 </tbody>
 </table>
 <p><code>/predict</code> returns HTTP 422 if every feature is <code>null</code>, and HTTP 503 if the joblib checkpoint is missing from disk.</p>
-<h2 id="request-patientfeatures">Request — <code>PatientFeatures</code></h2>
-<p>Schema source: <code>cardio_risk_rf.serving.schemas.PatientFeatures</code>. All fields are <strong>optional</strong> — missing values are forwarded as <code>NaN</code> into the pipeline (LightGBM main handles this natively; the baseline imputes with the train-set median).</p>
+<h2 id="request-patientfeatures">Request - <code>PatientFeatures</code></h2>
+<p>Schema source: <code>cardio_risk_rf.serving.schemas.PatientFeatures</code>. All fields are <strong>optional</strong> - missing values are forwarded as <code>NaN</code> into the pipeline (LightGBM main handles this natively; the baseline imputes with the train-set median).</p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">PatientFeatures</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
     <span class="n">male</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span>              <span class="c1"># 0 or 1</span>
-    <span class="n">age</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span>               <span class="c1"># years, 0–120</span>
-    <span class="n">education</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span>       <span class="c1"># 1–4 (Framingham encoding)</span>
+    <span class="n">age</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span>               <span class="c1"># years, 0-120</span>
+    <span class="n">education</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span>       <span class="c1"># 1-4 (Framingham encoding)</span>
     <span class="n">currentSmoker</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span>     <span class="c1"># 0 or 1</span>
     <span class="n">cigsPerDay</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span>      <span class="c1"># cigarettes per day</span>
-    <span class="n">BPMeds</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span>          <span class="c1"># 0 or 1 — on BP medication</span>
+    <span class="n">BPMeds</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span>          <span class="c1"># 0 or 1 - on BP medication</span>
     <span class="n">prevalentStroke</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span>   <span class="c1"># 0 or 1</span>
-    <span class="n">prevalentHyp</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span>      <span class="c1"># 0 or 1 — prevalent hypertension</span>
+    <span class="n">prevalentHyp</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span>      <span class="c1"># 0 or 1 - prevalent hypertension</span>
     <span class="n">diabetes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span>          <span class="c1"># 0 or 1</span>
     <span class="n">totChol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span>         <span class="c1"># total cholesterol (mg/dL)</span>
     <span class="n">sysBP</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span>           <span class="c1"># systolic BP (mmHg)</span>
@@ -682,7 +682,7 @@ docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </
     <span class="n">heartRate</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span>       <span class="c1"># bpm</span>
     <span class="n">glucose</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span>         <span class="c1"># mg/dL</span>
 </code></pre></div>
-<h2 id="response-predictionresponse">Response — <code>PredictionResponse</code></h2>
+<h2 id="response-predictionresponse">Response - <code>PredictionResponse</code></h2>
 <div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">ShapEntry</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
     <span class="n">feature</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">value</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span>

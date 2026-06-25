@@ -1655,7 +1655,7 @@ https://www.kaggle.com/datasets/sulianova/cardiovascular-disease-dataset</p>
 <li><code>age</code> is converted from <strong>days</strong> (18000-23000) to integer <strong>years</strong>
   (32-65) during load so downstream pipelines, SHAP plots, and the
   serving API all work in a human-readable unit.</li>
-<li><code>gender</code> is left as 1/2 (source encoding) — LightGBM and RandomForest
+<li><code>gender</code> is left as 1/2 (source encoding) - LightGBM and RandomForest
   treat it as a numeric feature without issue.</li>
 <li><code>cholesterol</code> and <code>gluc</code> are ordinal (1=normal, 2=above normal,
   3=well above normal); kept as numeric for trees.</li>
@@ -1698,7 +1698,7 @@ https://www.kaggle.com/datasets/sulianova/cardiovascular-disease-dataset</p>
     <div class="doc doc-contents ">
 
         <p>Read the sulianova Cardiovascular Disease CSV.</p>
-<p>The source file is <code>;</code>-separated; some Kaggle forks reshuffle to <code>,</code> —
+<p>The source file is <code>;</code>-separated; some Kaggle forks reshuffle to <code>,</code> -
 both are auto-detected. <code>id</code> is dropped. <code>age</code> is converted from days
 to integer years. Column order is stabilised to FEATURES + [TARGET].</p>
 
@@ -1731,7 +1731,7 @@ to integer years. Column order is stabilised to FEATURES + [TARGET].</p>
 <span class="normal">69</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">load_cardio</span><span class="p">(</span><span class="n">csv_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Read the sulianova Cardiovascular Disease CSV.</span>
 
-<span class="sd">    The source file is `;`-separated; some Kaggle forks reshuffle to `,` —</span>
+<span class="sd">    The source file is `;`-separated; some Kaggle forks reshuffle to `,` -</span>
 <span class="sd">    both are auto-detected. `id` is dropped. `age` is converted from days</span>
 <span class="sd">    to integer years. Column order is stabilised to FEATURES + [TARGET].</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -2198,7 +2198,7 @@ to integer years. Column order is stabilised to FEATURES + [TARGET].</p>
 
     <div class="doc doc-contents ">
 
-        <p>LightGBM classifier; passthrough preprocessing — native NaN handling.</p>
+        <p>LightGBM classifier; passthrough preprocessing - native NaN handling.</p>
 
 
             <details class="mkdocstrings-source">
@@ -2236,7 +2236,7 @@ to integer years. Column order is stabilised to FEATURES + [TARGET].</p>
     <span class="n">random_state</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">42</span><span class="p">,</span>
     <span class="o">**</span><span class="n">lgbm_overrides</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Pipeline</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;LightGBM classifier; passthrough preprocessing — native NaN handling.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;LightGBM classifier; passthrough preprocessing - native NaN handling.&quot;&quot;&quot;</span>
     <span class="n">params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;objective&quot;</span><span class="p">:</span> <span class="s2">&quot;binary&quot;</span><span class="p">,</span>
         <span class="s2">&quot;metric&quot;</span><span class="p">:</span> <span class="s2">&quot;average_precision&quot;</span><span class="p">,</span>
@@ -2802,7 +2802,7 @@ to integer years. Column order is stabilised to FEATURES + [TARGET].</p>
 
     <div class="doc doc-contents first">
 
-        <p>Inference CLI — load a checkpoint and predict on input(s).</p>
+        <p>Inference CLI - load a checkpoint and predict on input(s).</p>
 
 
 
@@ -2905,7 +2905,7 @@ to integer years. Column order is stabilised to FEATURES + [TARGET].</p>
 
     <div class="doc doc-contents ">
 
-        <p>CLI entry point — parse args, load model, predict, print JSON.</p>
+        <p>CLI entry point - parse args, load model, predict, print JSON.</p>
 
 
             <details class="mkdocstrings-source">
@@ -2920,7 +2920,7 @@ to integer years. Column order is stabilised to FEATURES + [TARGET].</p>
 <span class="normal">39</span>
 <span class="normal">40</span>
 <span class="normal">41</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;CLI entry point — parse args, load model, predict, print JSON.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;CLI entry point - parse args, load model, predict, print JSON.&quot;&quot;&quot;</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--checkpoint&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--input&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -3001,7 +3001,7 @@ val or test; for per-instance serving we pass a single row.</p>
 
     <div class="doc doc-contents first">
 
-        <p>Dependency injection — singleton model loader.</p>
+        <p>Dependency injection - singleton model loader.</p>
 
 
 
@@ -3167,7 +3167,7 @@ val or test; for per-instance serving we pass a single row.</p>
 
     <div class="doc doc-contents ">
 
-        <p>FastAPI lifespan — eagerly load the model (best-effort) on startup.</p>
+        <p>FastAPI lifespan - eagerly load the model (best-effort) on startup.</p>
 
 
             <details class="mkdocstrings-source">
@@ -3183,7 +3183,7 @@ val or test; for per-instance serving we pass a single row.</p>
 <span class="normal">33</span>
 <span class="normal">34</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@asynccontextmanager</span>
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">lifespan</span><span class="p">(</span><span class="n">app</span><span class="p">:</span> <span class="n">FastAPI</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="kc">None</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;FastAPI lifespan — eagerly load the model (best-effort) on startup.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;FastAPI lifespan - eagerly load the model (best-effort) on startup.&quot;&quot;&quot;</span>
     <span class="n">configure_logging</span><span class="p">(</span><span class="n">json_output</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">get_model</span><span class="p">()</span>
@@ -3216,7 +3216,7 @@ val or test; for per-instance serving we pass a single row.</p>
 
     <div class="doc doc-contents ">
 
-        <p>Middleware — inject a UUID request id and echo it back as <code>X-Request-ID</code>.</p>
+        <p>Middleware - inject a UUID request id and echo it back as <code>X-Request-ID</code>.</p>
 
 
             <details class="mkdocstrings-source">
@@ -3233,7 +3233,7 @@ val or test; for per-instance serving we pass a single row.</p>
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">add_request_id</span><span class="p">(</span>
     <span class="n">request</span><span class="p">:</span> <span class="n">Request</span><span class="p">,</span> <span class="n">call_next</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Request</span><span class="p">],</span> <span class="n">Awaitable</span><span class="p">[</span><span class="n">Response</span><span class="p">]]</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Response</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Middleware — inject a UUID request id and echo it back as `X-Request-ID`.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Middleware - inject a UUID request id and echo it back as `X-Request-ID`.&quot;&quot;&quot;</span>
     <span class="n">request</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">request_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span>
     <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">call_next</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
     <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s2">&quot;X-Request-ID&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">request_id</span>
@@ -3480,7 +3480,7 @@ is in days; converted at load time in <code>data/cardio.py</code>).</p>
 
 
 
-        <p>Pydantic configuration — allow populating <code>cls</code> by field or alias.</p>
+        <p>Pydantic configuration - allow populating <code>cls</code> by field or alias.</p>
 
 
 

@@ -623,18 +623,18 @@
 <p>Production-grade tabular cardiovascular-risk classifier on the Framingham Heart Study - 10-year coronary heart disease risk prediction with LightGBM (main) and RandomForest (baseline), served through FastAPI with per-patient SHAP explanations.</p>
 <h2 id="at-a-glance">At a glance</h2>
 <ul>
-<li><strong>Dataset:</strong> <a href="https://www.kaggle.com/datasets/sulianova/cardiovascular-disease-dataset">sulianova Cardiovascular Disease Dataset</a> — 70 000 patients × 11 clinical features, balanced target <code>cardio</code> (~50/50), stratified 70/15/15 split. Framingham (4240 rows) kept as secondary benchmark cohort.</li>
+<li><strong>Dataset:</strong> <a href="https://www.kaggle.com/datasets/sulianova/cardiovascular-disease-dataset">sulianova Cardiovascular Disease Dataset</a> - 70 000 patients × 11 clinical features, balanced target <code>cardio</code> (~50/50), stratified 70/15/15 split. Framingham (4240 rows) kept as secondary benchmark cohort.</li>
 <li><strong>Main model:</strong> LightGBM with native NaN handling, tuned by Optuna (50 trials, TPE sampler, early stopping on val).</li>
-<li><strong>Baseline:</strong> RandomForest with <code>SimpleImputer(median)</code> + <code>GridSearchCV</code> — gives a calibration reference for the main model.</li>
+<li><strong>Baseline:</strong> RandomForest with <code>SimpleImputer(median)</code> + <code>GridSearchCV</code> - gives a calibration reference for the main model.</li>
 <li><strong>Stack:</strong> Python 3.12 / 3.13 · scikit-learn · LightGBM · Optuna · SHAP · FastAPI · Hydra · DVC · MkDocs Material · uv.</li>
-<li><strong>Serving:</strong> FastAPI <code>/predict</code> returns <code>{probability, class, threshold, shap_top5, model_version, request_id}</code>. CPU-only — no GPU needed for training or inference.</li>
+<li><strong>Serving:</strong> FastAPI <code>/predict</code> returns <code>{probability, class, threshold, shap_top5, model_version, request_id}</code>. CPU-only - no GPU needed for training or inference.</li>
 </ul>
 <h2 id="navigation">Navigation</h2>
 <ul>
-<li><a href="architecture/">Architecture</a> — data flow, pipeline layout, mermaid diagram, and the main-vs-baseline design decisions.</li>
-<li><a href="training/">Training</a> — CLI commands, Optuna/Grid hyperparameter notes, and the one-time Framingham mirror runbook.</li>
-<li><a href="serving/">Serving</a> — <code>/predict</code> endpoint contract, Pydantic schemas, curl example.</li>
-<li><a href="api/">API reference</a> — mkdocstrings-generated reference for the <code>cardio_risk_rf</code> package.</li>
+<li><a href="architecture/">Architecture</a> - data flow, pipeline layout, mermaid diagram, and the main-vs-baseline design decisions.</li>
+<li><a href="training/">Training</a> - CLI commands, Optuna/Grid hyperparameter notes, and the one-time Framingham mirror runbook.</li>
+<li><a href="serving/">Serving</a> - <code>/predict</code> endpoint contract, Pydantic schemas, curl example.</li>
+<li><a href="api/">API reference</a> - mkdocstrings-generated reference for the <code>cardio_risk_rf</code> package.</li>
 </ul>
 <h2 id="links">Links</h2>
 <ul>

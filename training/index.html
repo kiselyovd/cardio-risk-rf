@@ -638,7 +638,7 @@
 
 
 <h1 id="training">Training</h1>
-<p>End-to-end training is orchestrated by <code>scripts/train_all.py</code>, which runs the baseline and main model in sequence, produces evaluation metrics, the calibration plot, and the global SHAP summary. The full run is CPU-only — no GPU is required or used at any stage.</p>
+<p>End-to-end training is orchestrated by <code>scripts/train_all.py</code>, which runs the baseline and main model in sequence, produces evaluation metrics, the calibration plot, and the global SHAP summary. The full run is CPU-only - no GPU is required or used at any stage.</p>
 <h2 id="prerequisites">Prerequisites</h2>
 <div class="highlight"><pre><span></span><code>uv<span class="w"> </span>sync<span class="w"> </span>--all-groups
 bash<span class="w"> </span>scripts/sync_data.sh
@@ -663,19 +663,19 @@ uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </sp
 uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>cardio_risk_rf.explain<span class="w"> </span>--model<span class="w"> </span>artifacts/main/cardio_risk_lgbm.joblib
 </code></pre></div>
 <h2 id="hyperparameters">Hyperparameters</h2>
-<p><strong>LightGBM (main) — Optuna TPE, 50 trials, seed=42.</strong> Search ranges (see <code>configs/model/lgbm.yaml</code>):</p>
+<p><strong>LightGBM (main) - Optuna TPE, 50 trials, seed=42.</strong> Search ranges (see <code>configs/model/lgbm.yaml</code>):</p>
 <ul>
-<li><code>num_leaves</code>: 16–128</li>
-<li><code>learning_rate</code>: 0.01–0.2 (log)</li>
-<li><code>max_depth</code>: -1 or 3–12</li>
-<li><code>min_child_samples</code>: 5–60</li>
-<li><code>reg_alpha</code>: 1e-8–10 (log)</li>
-<li><code>reg_lambda</code>: 1e-8–10 (log)</li>
-<li><code>feature_fraction</code>: 0.6–1.0</li>
-<li><code>bagging_fraction</code>: 0.6–1.0</li>
+<li><code>num_leaves</code>: 16-128</li>
+<li><code>learning_rate</code>: 0.01-0.2 (log)</li>
+<li><code>max_depth</code>: -1 or 3-12</li>
+<li><code>min_child_samples</code>: 5-60</li>
+<li><code>reg_alpha</code>: 1e-8-10 (log)</li>
+<li><code>reg_lambda</code>: 1e-8-10 (log)</li>
+<li><code>feature_fraction</code>: 0.6-1.0</li>
+<li><code>bagging_fraction</code>: 0.6-1.0</li>
 </ul>
-<p>Class imbalance: <code>scale_pos_weight = N_neg / N_pos</code> computed on train. Early stopping on val ROC-AUC with patience 30. No feature scaling or imputation — LightGBM handles NaN natively.</p>
-<p><strong>RandomForest (baseline) — GridSearchCV, 5-fold stratified.</strong> Grid (see <code>configs/model/rf.yaml</code>):</p>
+<p>Class imbalance: <code>scale_pos_weight = N_neg / N_pos</code> computed on train. Early stopping on val ROC-AUC with patience 30. No feature scaling or imputation - LightGBM handles NaN natively.</p>
+<p><strong>RandomForest (baseline) - GridSearchCV, 5-fold stratified.</strong> Grid (see <code>configs/model/rf.yaml</code>):</p>
 <ul>
 <li><code>n_estimators</code>: [200, 500]</li>
 <li><code>max_depth</code>: [None, 8, 16]</li>
@@ -685,14 +685,14 @@ uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </sp
 <p>Pipeline: <code>SimpleImputer(strategy="median")</code> → <code>RandomForestClassifier</code>. No <code>StandardScaler</code> (tree models are scale-invariant).</p>
 <h2 id="outputs">Outputs</h2>
 <ul>
-<li><code>artifacts/main/cardio_risk_lgbm.joblib</code> — main model pipeline.</li>
-<li><code>artifacts/baseline/cardio_risk_rf.joblib</code> — baseline pipeline.</li>
-<li><code>reports/metrics_summary.json</code> — ROC-AUC / PR-AUC / F1 / Brier on test (n≈636) for both models.</li>
-<li><code>reports/calibration.png</code> — reliability diagram on val.</li>
-<li><code>reports/shap_summary.png</code> — global SHAP summary bar + beeswarm on main model.</li>
+<li><code>artifacts/main/cardio_risk_lgbm.joblib</code> - main model pipeline.</li>
+<li><code>artifacts/baseline/cardio_risk_rf.joblib</code> - baseline pipeline.</li>
+<li><code>reports/metrics_summary.json</code> - ROC-AUC / PR-AUC / F1 / Brier on test (n≈636) for both models.</li>
+<li><code>reports/calibration.png</code> - reliability diagram on val.</li>
+<li><code>reports/shap_summary.png</code> - global SHAP summary bar + beeswarm on main model.</li>
 </ul>
 <h2 id="gpu-notes">GPU notes</h2>
-<p>None — both LightGBM and scikit-learn RandomForest run on CPU. A typical Optuna 50-trial run completes in ~2–4 min on a modern laptop CPU. No CUDA, no <code>torch</code>, no accelerator config.</p>
+<p>None - both LightGBM and scikit-learn RandomForest run on CPU. A typical Optuna 50-trial run completes in ~2-4 min on a modern laptop CPU. No CUDA, no <code>torch</code>, no accelerator config.</p>
 <h3 id="framingham-mirror-upload-one-time-operator-only">Framingham mirror upload (one-time, operator only)</h3>
 <div class="highlight"><pre><span></span><code>hf<span class="w"> </span>repo<span class="w"> </span>create<span class="w"> </span>kiselyovd/framingham<span class="w"> </span>--repo-type<span class="w"> </span>dataset
 hf<span class="w"> </span>upload<span class="w"> </span>kiselyovd/framingham<span class="w"> </span>data/raw/framingham.csv<span class="w"> </span>--repo-type<span class="w"> </span>dataset

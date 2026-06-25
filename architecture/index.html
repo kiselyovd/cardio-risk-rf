@@ -555,7 +555,7 @@
   classDef artifact fill:#E53935,stroke:#B71C1C,color:#fff
   classDef serve fill:#C62828,stroke:#B71C1C,color:#fff</code></pre>
 <p>Key design decisions:
-- Main model uses <strong>LightGBM native NaN handling</strong> — no imputer in its pipeline. Missing values at inference (including <code>/predict</code>) are forwarded as-is.
+- Main model uses <strong>LightGBM native NaN handling</strong> - no imputer in its pipeline. Missing values at inference (including <code>/predict</code>) are forwarded as-is.
 - Baseline uses <code>SimpleImputer(strategy="median")</code> because RandomForest cannot split on NaN. No <code>StandardScaler</code> (tree models are scale-invariant).
 - Class imbalance handled by <code>scale_pos_weight = N_neg / N_pos</code> (LGBM) and <code>class_weight="balanced"</code> (RF).
 - Hyperparameter search: Optuna 50 trials for LGBM (TPE sampler, seed=42, early-stopping on val), GridSearchCV short grid for RF.
