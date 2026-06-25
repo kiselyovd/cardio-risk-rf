@@ -6,7 +6,7 @@ import sys
 
 
 def main() -> int:
-    print("cardio-risk-rf — use make train / make evaluate / make serve")
+    print("cardio-risk-rf - use make train / make evaluate / make serve")
     return 0
 
 

@@ -52,11 +52,11 @@ print(model.predict_proba(x))
 ## Feature order (11)
 
 `age (years), gender (1=female, 2=male), height (cm), weight (kg), ap_hi (systolic BP mmHg), ap_lo (diastolic BP mmHg), cholesterol (1=normal, 2=above, 3=well-above), gluc (1-3 same scale), smoke (0/1), alco (0/1), active (0/1)`.
-Any field may be `null` — LightGBM handles NaN natively; the RandomForest pipeline imputes with the training-set median. Input is coerced to `float` at serve-time.
+Any field may be `null` - LightGBM handles NaN natively; the RandomForest pipeline imputes with the training-set median. Input is coerced to `float` at serve-time.
 
 ## Top SHAP drivers (global, on val)
 
-1. `ap_hi` (systolic blood pressure) — dominant
+1. `ap_hi` (systolic blood pressure) - dominant
 2. `age`
 3. `cholesterol`
 4. `weight`

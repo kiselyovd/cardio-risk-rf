@@ -18,7 +18,7 @@ def build_main(
     random_state: int = 42,
     **lgbm_overrides: Any,
 ) -> Pipeline:
-    """LightGBM classifier; passthrough preprocessing — native NaN handling."""
+    """LightGBM classifier; passthrough preprocessing - native NaN handling."""
     params: dict[str, Any] = {
         "objective": "binary",
         "metric": "average_precision",

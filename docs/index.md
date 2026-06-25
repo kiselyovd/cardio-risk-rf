@@ -6,18 +6,18 @@ Production-grade tabular cardiovascular-risk classifier on the Framingham Heart 
 
 ## At a glance
 
-- **Dataset:** [sulianova Cardiovascular Disease Dataset](https://www.kaggle.com/datasets/sulianova/cardiovascular-disease-dataset) — 70 000 patients × 11 clinical features, balanced target `cardio` (~50/50), stratified 70/15/15 split. Framingham (4240 rows) kept as secondary benchmark cohort.
+- **Dataset:** [sulianova Cardiovascular Disease Dataset](https://www.kaggle.com/datasets/sulianova/cardiovascular-disease-dataset) - 70 000 patients × 11 clinical features, balanced target `cardio` (~50/50), stratified 70/15/15 split. Framingham (4240 rows) kept as secondary benchmark cohort.
 - **Main model:** LightGBM with native NaN handling, tuned by Optuna (50 trials, TPE sampler, early stopping on val).
-- **Baseline:** RandomForest with `SimpleImputer(median)` + `GridSearchCV` — gives a calibration reference for the main model.
+- **Baseline:** RandomForest with `SimpleImputer(median)` + `GridSearchCV` - gives a calibration reference for the main model.
 - **Stack:** Python 3.12 / 3.13 · scikit-learn · LightGBM · Optuna · SHAP · FastAPI · Hydra · DVC · MkDocs Material · uv.
-- **Serving:** FastAPI `/predict` returns `{probability, class, threshold, shap_top5, model_version, request_id}`. CPU-only — no GPU needed for training or inference.
+- **Serving:** FastAPI `/predict` returns `{probability, class, threshold, shap_top5, model_version, request_id}`. CPU-only - no GPU needed for training or inference.
 
 ## Navigation
 
-- [Architecture](architecture.md) — data flow, pipeline layout, mermaid diagram, and the main-vs-baseline design decisions.
-- [Training](training.md) — CLI commands, Optuna/Grid hyperparameter notes, and the one-time Framingham mirror runbook.
-- [Serving](serving.md) — `/predict` endpoint contract, Pydantic schemas, curl example.
-- [API reference](api.md) — mkdocstrings-generated reference for the `cardio_risk_rf` package.
+- [Architecture](architecture.md) - data flow, pipeline layout, mermaid diagram, and the main-vs-baseline design decisions.
+- [Training](training.md) - CLI commands, Optuna/Grid hyperparameter notes, and the one-time Framingham mirror runbook.
+- [Serving](serving.md) - `/predict` endpoint contract, Pydantic schemas, curl example.
+- [API reference](api.md) - mkdocstrings-generated reference for the `cardio_risk_rf` package.
 
 ## Links
 

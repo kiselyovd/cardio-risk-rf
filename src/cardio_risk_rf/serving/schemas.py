@@ -50,6 +50,6 @@ class PredictionResponse(BaseModel):
     request_id: str
 
     class Config:
-        """Pydantic configuration — allow populating `cls` by field or alias."""
+        """Pydantic configuration - allow populating `cls` by field or alias."""
 
         populate_by_name = True

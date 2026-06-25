@@ -1,4 +1,4 @@
-"""Factory tests — LGBM passes NaN through, RF gets median imputer."""
+"""Factory tests - LGBM passes NaN through, RF gets median imputer."""
 
 from __future__ import annotations
 

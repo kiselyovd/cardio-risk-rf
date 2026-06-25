@@ -24,7 +24,7 @@ log = get_logger(__name__)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
-    """FastAPI lifespan — eagerly load the model (best-effort) on startup."""
+    """FastAPI lifespan - eagerly load the model (best-effort) on startup."""
     configure_logging(json_output=True)
     try:
         get_model()
@@ -48,7 +48,7 @@ Instrumentator().instrument(app).expose(app, endpoint="/metrics")
 async def add_request_id(
     request: Request, call_next: Callable[[Request], Awaitable[Response]]
 ) -> Response:
-    """Middleware — inject a UUID request id and echo it back as `X-Request-ID`."""
+    """Middleware - inject a UUID request id and echo it back as `X-Request-ID`."""
     request.state.request_id = str(uuid.uuid4())
     response = await call_next(request)
     response.headers["X-Request-ID"] = request.state.request_id

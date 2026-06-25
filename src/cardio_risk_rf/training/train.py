@@ -39,8 +39,8 @@ def train_main(
     optuna_trials: int = 50,
     seed: int = 42,
 ) -> Path:
-    X_train, y_train = _xy(train_df)  # noqa: N806 — ML convention for feature matrix
-    X_val, y_val = _xy(val_df)  # noqa: N806 — ML convention for feature matrix
+    X_train, y_train = _xy(train_df)  # noqa: N806 - ML convention for feature matrix
+    X_val, y_val = _xy(val_df)  # noqa: N806 - ML convention for feature matrix
     spw = _scale_pos_weight(y_train)
     log.info("lgbm_scale_pos_weight", value=spw)
 
@@ -97,7 +97,7 @@ def train_baseline(
     cv_folds: int = 5,
     seed: int = 42,
 ) -> Path:
-    X_train, y_train = _xy(train_df)  # noqa: N806 — ML convention for feature matrix
+    X_train, y_train = _xy(train_df)  # noqa: N806 - ML convention for feature matrix
 
     base = build_baseline(random_state=seed)
     grid = {

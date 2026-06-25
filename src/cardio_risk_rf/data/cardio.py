@@ -11,7 +11,7 @@ Raw columns (source CSV):
 - `age` is converted from **days** (18000-23000) to integer **years**
   (32-65) during load so downstream pipelines, SHAP plots, and the
   serving API all work in a human-readable unit.
-- `gender` is left as 1/2 (source encoding) — LightGBM and RandomForest
+- `gender` is left as 1/2 (source encoding) - LightGBM and RandomForest
   treat it as a numeric feature without issue.
 - `cholesterol` and `gluc` are ordinal (1=normal, 2=above normal,
   3=well above normal); kept as numeric for trees.
@@ -46,7 +46,7 @@ TARGET: str = "cardio"
 def load_cardio(csv_path: str | Path) -> pd.DataFrame:
     """Read the sulianova Cardiovascular Disease CSV.
 
-    The source file is `;`-separated; some Kaggle forks reshuffle to `,` —
+    The source file is `;`-separated; some Kaggle forks reshuffle to `,` -
     both are auto-detected. `id` is dropped. `age` is converted from days
     to integer years. Column order is stabilised to FEATURES + [TARGET].
     """

@@ -16,25 +16,25 @@ docker run --rm -p 8000:8000 ghcr.io/kiselyovd/cardio-risk-rf:v0.1.0
 
 | Method | Path | Purpose |
 |---|---|---|
-| `GET` | `/health` | Liveness probe — returns `{"status": "ok", "version": <model_version>}`. |
+| `GET` | `/health` | Liveness probe - returns `{"status": "ok", "version": <model_version>}`. |
 | `POST` | `/predict` | Score a single patient. Query param `model` selects `main` (default) or `baseline`. |
 
 `/predict` returns HTTP 422 if every feature is `null`, and HTTP 503 if the joblib checkpoint is missing from disk.
 
-## Request — `PatientFeatures`
+## Request - `PatientFeatures`
 
-Schema source: `cardio_risk_rf.serving.schemas.PatientFeatures`. All fields are **optional** — missing values are forwarded as `NaN` into the pipeline (LightGBM main handles this natively; the baseline imputes with the train-set median).
+Schema source: `cardio_risk_rf.serving.schemas.PatientFeatures`. All fields are **optional** - missing values are forwarded as `NaN` into the pipeline (LightGBM main handles this natively; the baseline imputes with the train-set median).
 
 ```python
 class PatientFeatures(BaseModel):
     male: int | None              # 0 or 1
-    age: int | None               # years, 0–120
-    education: float | None       # 1–4 (Framingham encoding)
+    age: int | None               # years, 0-120
+    education: float | None       # 1-4 (Framingham encoding)
     currentSmoker: int | None     # 0 or 1
     cigsPerDay: float | None      # cigarettes per day
-    BPMeds: float | None          # 0 or 1 — on BP medication
+    BPMeds: float | None          # 0 or 1 - on BP medication
     prevalentStroke: int | None   # 0 or 1
-    prevalentHyp: int | None      # 0 or 1 — prevalent hypertension
+    prevalentHyp: int | None      # 0 or 1 - prevalent hypertension
     diabetes: int | None          # 0 or 1
     totChol: float | None         # total cholesterol (mg/dL)
     sysBP: float | None           # systolic BP (mmHg)
@@ -44,7 +44,7 @@ class PatientFeatures(BaseModel):
     glucose: float | None         # mg/dL
 ```
 
-## Response — `PredictionResponse`
+## Response - `PredictionResponse`
 
 ```python
 class ShapEntry(BaseModel):

@@ -1,4 +1,4 @@
-"""Inference CLI — load a checkpoint and predict on input(s)."""
+"""Inference CLI - load a checkpoint and predict on input(s)."""
 
 from __future__ import annotations
 
@@ -30,7 +30,7 @@ def predict(model: Any, features: dict[str, Any]) -> dict[str, Any]:
 
 
 def main() -> None:
-    """CLI entry point — parse args, load model, predict, print JSON."""
+    """CLI entry point - parse args, load model, predict, print JSON."""
     parser = argparse.ArgumentParser()
     parser.add_argument("--checkpoint", required=True)
     parser.add_argument("--input", required=True)

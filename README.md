@@ -11,7 +11,7 @@
 
 Production-grade tabular cardiovascular-risk classifier on the Framingham Heart Study (4240 patients, 10-year CHD). Main model **LightGBM** with native NaN handling and SHAP explainability; baseline **RandomForest** with median imputation. Hydra-configured, Optuna-tuned, evaluated with ROC-AUC / PR-AUC / F1 / Brier + calibration plot, served by FastAPI as `/predict` with local SHAP top-5, distributed through Hugging Face Hub and MkDocs Material.
 
-> **Part of the [kiselyovd ML portfolio](https://github.com/kiselyovd#ml-portfolio)** — production-grade ML projects sharing one [cookiecutter template](https://github.com/kiselyovd/ml-project-template).
+> **Part of the [kiselyovd ML portfolio](https://github.com/kiselyovd#ml-portfolio)** - production-grade ML projects sharing one [cookiecutter template](https://github.com/kiselyovd/ml-project-template).
 
 📖 [English docs](https://kiselyovd.github.io/cardio-risk-rf/) • 🇷🇺 [Русский README](README.ru.md) • 🤗 [HF Hub model](https://huggingface.co/kiselyovd/cardio-risk-rf)
 
@@ -19,7 +19,7 @@ Production-grade tabular cardiovascular-risk classifier on the Framingham Heart 
 
 [sulianova Cardiovascular Disease Dataset](https://www.kaggle.com/datasets/sulianova/cardiovascular-disease-dataset). 70 000 rows × 11 clinical features, **balanced** target `cardio` (50/50). Features: age, gender, height/weight, systolic/diastolic BP, cholesterol & glucose (ordinal 1-2-3), smoking/alcohol/activity. Fetched by `scripts/sync_data.sh` from Kaggle with an HF Datasets fallback mirror. Split 70/15/15 stratified by target (`train=48999, val=10500, test=10501`). The original [Framingham Heart Study](https://www.kaggle.com/datasets/aasheesh200/framingham-heart-study-dataset) (4240 rows, 10-year prospective CHD target) is kept as a secondary cohort in `notebooks/02_benchmark.ipynb`.
 
-The original 49-row dataset from the `coro-detect` author is archived at `docs/legacy/original_dataset.csv` — see `docs/legacy/README.md` for rationale.
+The original 49-row dataset from the `coro-detect` author is archived at `docs/legacy/original_dataset.csv` - see `docs/legacy/README.md` for rationale.
 
 ## Results
 
@@ -64,4 +64,4 @@ curl -X POST localhost:8000/predict -H 'content-type: application/json' -d @data
 
 ## License
 
-MIT — see [LICENSE](LICENSE). Dataset under CC-BY-4.0 (Framingham Heart Study).
+MIT - see [LICENSE](LICENSE). Dataset under CC-BY-4.0 (Framingham Heart Study).

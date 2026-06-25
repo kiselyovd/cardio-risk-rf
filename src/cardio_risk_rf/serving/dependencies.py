@@ -1,4 +1,4 @@
-"""Dependency injection — singleton model loader."""
+"""Dependency injection - singleton model loader."""
 
 from __future__ import annotations
 
