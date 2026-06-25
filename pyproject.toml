@@ -114,6 +114,7 @@ exclude = ["tests", "notebooks", "outputs", "mlruns", "docs"]
 
 [tool.codespell]
 skip = "uv.lock,*.ipynb,notebooks,outputs,mlruns"
+ignore-words-list = "fpr,tpr"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
