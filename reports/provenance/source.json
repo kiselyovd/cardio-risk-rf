@@ -1,0 +1,9 @@
+{
+  "source": "https://www.kaggle.com/api/v1/datasets/download/sulianova/cardiovascular-disease-dataset",
+  "resolved_archive": "https://storage.googleapis.com:443/kaggle-data-sets/107706/256873/bundle/archive.zip",
+  "bytes": 760066,
+  "sha256": "b78ff607480810c3e27de3e11d52c4962a3a81dbb3d69365e1cf3394a67c2b23",
+  "retrieved_utc": "2026-10-15T12:18:42.435835+00:00",
+  "license_status": "Unknown (Kaggle publisher metadata)",
+  "csv_sha256": "21a705d23381b0dfd6a6416da701b490744f1fc3b47e9ff3db3968c420ffa10c"
+}

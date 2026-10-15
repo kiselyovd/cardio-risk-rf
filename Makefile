@@ -5,16 +5,16 @@ setup:
 	uv run pre-commit install
 
 data:
-	uv run python -m cardio_risk_rf.data.prepare --raw data/raw --out data/processed
+	uv run python -m cardio_risk_rf.data.prepare --raw data/raw/cardio.csv --out data/processed
 
 train:
-	uv run python -m cardio_risk_rf.training.train
+	uv run python scripts/train_all.py
 
 evaluate:
-	uv run python -m cardio_risk_rf.evaluation.evaluate --checkpoint artifacts/checkpoints/best.ckpt --data data/processed
+	uv run python -m cardio_risk_rf.evaluation.evaluate --model artifacts/main/cardio_risk_lgbm.joblib --split data/processed/test.parquet --out reports/metrics.json
 
 serve:
-	MODEL_PATH=artifacts/checkpoints/best.ckpt uv run uvicorn cardio_risk_rf.serving.main:app --reload --port 8000
+	uv run uvicorn cardio_risk_rf.serving.main:app --reload --port 8000
 test:
 	uv run pytest
 

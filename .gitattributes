@@ -1,0 +1,4 @@
+artifact-manifest.json text eol=lf
+reports/*.json text eol=lf
+reports/provenance/*.json text eol=lf
+*.npz binary

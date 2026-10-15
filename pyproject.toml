@@ -100,7 +100,7 @@ ignore_missing_imports = true
 # DEP004: optional dependency groups (serving, tracking, docs) are intentional
 ignore = ["DEP001", "DEP002", "DEP003", "DEP004"]
 extend_exclude = ["notebooks"]
-known_first_party = ["cardio_risk_rf"]
+known_first_party = ["cardio_risk_rf", "artifact_manifest"]
 
 [tool.bandit]
 # B101: asserts in tests, B311: non-crypto random for demo samples,

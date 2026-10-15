@@ -25,4 +25,10 @@ data/processed/*
 !data/processed/.gitignore
 .env
 .env.local
-reports/
+reports/*
+!reports/provenance/
+!reports/replay-native.json
+!reports/replay-native.npz
+!reports/metrics.json
+!reports/metrics_baseline.json
+!reports/metrics_summary.json

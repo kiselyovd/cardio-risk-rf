@@ -1,13 +1,9 @@
 """FastAPI smoke: /health, /predict, /predict?model=baseline, bad payload.
 
-Uses an autouse fixture to fit + save small dummy artefacts into
-``artifacts/{main,baseline}/`` before the module's tests run, so
-``routes._load(...)`` succeeds without requiring a prior train_all run.
+Uses isolated temporary synthetic artifacts, preserving any operator checkpoints.
 """
 
 from __future__ import annotations
-
-from pathlib import Path
 
 import joblib
 import numpy as np
@@ -17,12 +13,14 @@ from fastapi.testclient import TestClient
 
 from cardio_risk_rf.data.cardio import FEATURES
 from cardio_risk_rf.models.factory import build_baseline, build_main
+from cardio_risk_rf.serving import routes
 from cardio_risk_rf.serving.main import app
 
 
 @pytest.fixture(autouse=True, scope="module")
-def _dummy_artefacts() -> None:
-    """Fit tiny LGBM + RF pipelines on toy data; save where routes.py expects."""
+def _dummy_artefacts(tmp_path_factory):
+    """Fit temporary pipelines and restore the in-process serving configuration."""
+    directory = tmp_path_factory.mktemp("api-models")
     rng = np.random.default_rng(0)
     n = 200
     data = {f: rng.normal(size=n) for f in FEATURES}
@@ -31,13 +29,19 @@ def _dummy_artefacts() -> None:
 
     main = build_main(scale_pos_weight=1.0, random_state=42)
     main.fit(x, y)
-    Path("artifacts/main").mkdir(parents=True, exist_ok=True)
-    joblib.dump(main, "artifacts/main/cardio_risk_lgbm.joblib")
+    main_path = directory / "cardio_risk_lgbm.joblib"
+    joblib.dump(main, main_path)
 
     base = build_baseline(random_state=42)
     base.fit(x, y)
-    Path("artifacts/baseline").mkdir(parents=True, exist_ok=True)
-    joblib.dump(base, "artifacts/baseline/cardio_risk_rf.joblib")
+    baseline_path = directory / "cardio_risk_rf.joblib"
+    joblib.dump(base, baseline_path)
+    with pytest.MonkeyPatch.context() as patch:
+        patch.setattr(
+            routes, "_MODEL_FILES", {"main": str(main_path), "baseline": str(baseline_path)}
+        )
+        patch.setattr(routes, "_MODELS", {})
+        yield
 
 
 def _payload() -> dict:

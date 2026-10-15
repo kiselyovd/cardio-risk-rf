@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "project": "cardio-risk-rf",
+  "hub": {
+    "repo_id": "kiselyovd/cardio-risk-rf",
+    "repo_type": "model",
+    "revision": "5b1c8af3f5afcf236db26fa303b7c7d0917dd191",
+    "files": [
+      {
+        "path": "cardio_risk_lgbm.joblib",
+        "role": "weights",
+        "variant": "main",
+        "sha256": "d0b96ed0fb1209be8ed73ebb41d41225d6d106c2f291a285c6c9fc8950a2ad39"
+      },
+      {
+        "path": "cardio_risk_rf.joblib",
+        "role": "weights",
+        "variant": "baseline",
+        "sha256": "eff065c65821d55059ac269c9dad644b34da5456f364020ccd13f22e15a9bb9b"
+      }
+    ]
+  },
+  "dataset": {
+    "source": "https://www.kaggle.com/datasets/sulianova/cardiovascular-disease-dataset",
+    "csv_sha256": "21a705d23381b0dfd6a6416da701b490744f1fc3b47e9ff3db3968c420ffa10c",
+    "source_receipt": "reports/provenance/source.json",
+    "split_manifest": "reports/provenance/split-rows.json",
+    "split_records_sha256": "e64f9a619e0b199fc43da2046b8a04e730a4f7ffabef70052761d7ba3138eb63"
+  },
+  "evaluation": {
+    "status": "replayed_reconstructed",
+    "label": "Replayed on the original 10501-row test fold, legacy seed42 protocol",
+    "scope": "Target is CVD presence at examination. The exact legacy split is 48999/10500/10501; original training row membership is unrecorded. Average precision uses sklearn AP.",
+    "training_membership_verified": false,
+    "report": "reports/replay-native.json",
+    "report_sha256": "103443728a4039d5524a5eddf16ae4bd083a27b1ed6bbe3ee9ade2cad1726550",
+    "metrics": [
+      {
+        "name": "LightGBM ROC-AUC",
+        "pointer": "/models/main/roc_auc"
+      },
+      {
+        "name": "LightGBM average precision",
+        "pointer": "/models/main/average_precision"
+      },
+      {
+        "name": "RF ROC-AUC",
+        "pointer": "/models/baseline/roc_auc"
+      },
+      {
+        "name": "RF average precision",
+        "pointer": "/models/baseline/average_precision"
+      }
+    ]
+  },
+  "licenses": {
+    "code": {
+      "id": "MIT",
+      "path": "LICENSE"
+    },
+    "dataset": {
+      "id": "unknown",
+      "source": "https://www.kaggle.com/datasets/sulianova/cardiovascular-disease-dataset/metadata"
+    },
+    "weights": {
+      "declared": "MIT",
+      "scope": "author model declaration; dataset rights remain unspecified"
+    }
+  }
+}

@@ -1,19 +1,28 @@
 stages:
   prepare:
-    cmd: python -m cardio_risk_rf.data.prepare --raw data/raw --out data/processed
+    cmd: python -m cardio_risk_rf.data.prepare --raw data/raw/cardio.csv --out data/processed
     deps:
-      - data/raw
+      - data/raw/cardio.csv
+      - src/cardio_risk_rf/data/cardio.py
       - src/cardio_risk_rf/data/prepare.py
+    outs:
+      - data/processed/train.parquet
+      - data/processed/val.parquet
+      - data/processed/test.parquet
+      - data/processed/split-manifest.json
   train:
-    cmd: python -m cardio_risk_rf.training.train
+    cmd: python scripts/train_all.py
     deps:
       - data/processed
       - src/cardio_risk_rf
-      - configs
-    params:
-      - params.yaml:
+      - scripts/train_all.py
     outs:
-      - artifacts/checkpoints
+      - artifacts/main/cardio_risk_lgbm.joblib
+      - artifacts/baseline/cardio_risk_rf.joblib
     metrics:
       - reports/metrics.json:
+          cache: false
+      - reports/metrics_baseline.json:
+          cache: false
+      - reports/metrics_summary.json:
           cache: false

@@ -1,45 +1,32 @@
-# cardio-risk-rf
+# Cardiovascular Disease Classification
 
-![cardio-risk-rf banner](images/banner.jpg)
+Classify the **presence of cardiovascular disease at medical examination** from the Sulianova dataset's 11 features. LightGBM is the main estimator; RandomForest with median imputation is the baseline. The historical repository name is retained.
 
-Production-grade tabular cardiovascular-risk classifier on the Framingham Heart Study - 10-year coronary heart disease risk prediction with LightGBM (main) and RandomForest (baseline), served through FastAPI with per-patient SHAP explanations.
+[Model and weights](https://huggingface.co/kiselyovd/cardio-risk-rf) · [Evaluation protocol](EVALUATION.md) · [Русский](https://github.com/kiselyovd/cardio-risk-rf/blob/main/README.ru.md)
 
-## At a glance
+## Results
 
-- **Dataset:** [sulianova Cardiovascular Disease Dataset](https://www.kaggle.com/datasets/sulianova/cardiovascular-disease-dataset) - 70 000 patients × 11 clinical features, balanced target `cardio` (~50/50), stratified 70/15/15 split. Framingham (4240 rows) kept as secondary benchmark cohort.
-- **Main model:** LightGBM with native NaN handling, tuned by Optuna (50 trials, TPE sampler, early stopping on val).
-- **Baseline:** RandomForest with `SimpleImputer(median)` + `GridSearchCV` - gives a calibration reference for the main model.
-- **Stack:** Python 3.12 / 3.13 · scikit-learn · LightGBM · Optuna · SHAP · FastAPI · Hydra · DVC · MkDocs Material · uv.
-- **Serving:** FastAPI `/predict` returns `{probability, class, threshold, shap_top5, model_version, request_id}`. CPU-only - no GPU needed for training or inference.
+<!-- ARTIFACT-MANIFEST:START -->
+### Current artifact and evaluation
 
-## Navigation
+**Replayed on the original 10501-row test fold, legacy seed42 protocol**
 
-- [Architecture](architecture.md) - data flow, pipeline layout, mermaid diagram, and the main-vs-baseline design decisions.
-- [Training](training.md) - CLI commands, Optuna/Grid hyperparameter notes, and the one-time Framingham mirror runbook.
-- [Serving](serving.md) - `/predict` endpoint contract, Pydantic schemas, curl example.
-- [API reference](api.md) - mkdocstrings-generated reference for the `cardio_risk_rf` package.
+| Metric | Value |
+|---|---:|
+| LightGBM ROC-AUC | 79.77% |
+| LightGBM average precision | 78.11% |
+| RF ROC-AUC | 79.49% |
+| RF average precision | 77.94% |
 
-## Links
+Target is CVD presence at examination. The exact legacy split is 48999/10500/10501; original training row membership is unrecorded. Average precision uses sklearn AP.
 
-- GitHub: [kiselyovd/cardio-risk-rf](https://github.com/kiselyovd/cardio-risk-rf)
-- Hugging Face model: [kiselyovd/cardio-risk-rf](https://huggingface.co/kiselyovd/cardio-risk-rf)
-- Russian README: [README.ru.md](https://github.com/kiselyovd/cardio-risk-rf/blob/main/README.ru.md)
-- Template: [kiselyovd/ml-project-template](https://github.com/kiselyovd/ml-project-template)
+[Evaluation record](https://github.com/kiselyovd/cardio-risk-rf/blob/main/reports/replay-native.json) · [Pinned model](https://huggingface.co/kiselyovd/cardio-risk-rf/tree/5b1c8af3f5afcf236db26fa303b7c7d0917dd191)
+<!-- ARTIFACT-MANIFEST:END -->
 
-## Visualizations
+The source CSV, exact row split, model hashes and prediction arrays accompany the [new replay](https://github.com/kiselyovd/cardio-risk-rf/blob/main/reports/replay-native.json). Average precision is the sklearn AP measure; thresholds use 0.5. This is a retrospective research classifier, with no prospective ten-year horizon or clinical validation.
 
-![ROC and PR curves](images/roc_pr.png)
+## Inspect the model
 
-ROC and Precision-Recall curves on the held-out test split - LightGBM (main) vs RandomForest (baseline).
+![Current model SHAP associations](images/shap_summary.png)
 
-![SHAP summary](images/shap_summary.png)
-
-Global SHAP summary for the main LightGBM model - per-feature impact on the 10-year CHD risk prediction.
-
-![Calibration curve](images/calibration.png)
-
-Reliability (calibration) curve on the validation split - predicted probability vs observed frequency.
-
-## Intended use and disclaimer
-
-This model is a **portfolio/research demo** trained on the public Framingham Heart Study subset. It is **not a medical device** and must not be used for clinical decision-making, diagnosis, or patient-facing risk communication. Calibration, fairness, and distribution shift have not been validated outside the original cohort. Use only for educational purposes, ML-engineering review, and to compare against other baselines on the same dataset.
+[Run the published artifact](https://github.com/kiselyovd/cardio-risk-rf#run-the-published-artifact) · [Data and preprocessing contract](EVALUATION.md) · [Component licenses](LICENSES.md)

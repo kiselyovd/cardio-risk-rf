@@ -14,9 +14,13 @@ jobs:
       - name: Set up Python
         run: uv python install ${{ matrix.python-version }}
       - name: Sync deps
-        run: uv sync --all-groups --python ${{ matrix.python-version }}
+        run: uv sync --frozen --all-groups --python ${{ matrix.python-version }}
+      - name: Artifact and documentation drift
+        run: |
+          python scripts/artifact_manifest.py --check
+          python scripts/artifact_manifest.py --check --document docs/index.md
       - name: Run pytest
-        run: uv run --all-groups --python ${{ matrix.python-version }} pytest --cov=cardio_risk_rf --cov-report=xml --cov-fail-under=10
+        run: uv run --frozen --all-groups --python ${{ matrix.python-version }} pytest --cov=cardio_risk_rf --cov-report=xml --cov-fail-under=10
       - name: Upload coverage artifact
         if: matrix.python-version == '3.13'
         uses: actions/upload-artifact@v7

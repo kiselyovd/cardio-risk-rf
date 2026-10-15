@@ -15,7 +15,6 @@ from __future__ import annotations
 
 from pathlib import Path
 
-import joblib
 import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn.metrics import (
@@ -24,6 +23,9 @@ from sklearn.metrics import (
     roc_auc_score,
     roc_curve,
 )
+
+from cardio_risk_rf.artifacts import load_pipeline
+from cardio_risk_rf.data.cardio import FEATURES
 
 ROOT = Path(__file__).resolve().parents[1]
 TARGET = "cardio"
@@ -38,15 +40,14 @@ COLORS = {"LightGBM (main)": "#526CFE", "RandomForest (baseline)": "#9AA3B2"}
 def main() -> None:
     test = pd.read_parquet(ROOT / "data" / "processed" / "test.parquet")
     y = test[TARGET].to_numpy()
-    x = test.drop(columns=[TARGET])
+    x = test[FEATURES]
 
     plt.style.use("seaborn-v0_8-whitegrid")
     fig, (ax_roc, ax_pr) = plt.subplots(1, 2, figsize=(12, 5), dpi=150)
 
     for name, path in MODELS.items():
         # joblib artifacts are this project's own trusted, locally-trained models.
-        bundle = joblib.load(path)
-        model = bundle["model"] if isinstance(bundle, dict) else bundle
+        model = load_pipeline(path)
         proba = model.predict_proba(x)[:, 1]
 
         auroc = roc_auc_score(y, proba)

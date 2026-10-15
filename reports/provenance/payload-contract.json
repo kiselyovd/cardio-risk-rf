@@ -1,0 +1,68 @@
+[
+  {
+    "file": "cardio_risk_lgbm.joblib",
+    "payload_type": "dict",
+    "keys": [
+      "model",
+      "best_params",
+      "cv_pr_auc"
+    ],
+    "model_type": "Pipeline",
+    "features": [
+      "age",
+      "gender",
+      "height",
+      "weight",
+      "ap_hi",
+      "ap_lo",
+      "cholesterol",
+      "gluc",
+      "smoke",
+      "alco",
+      "active"
+    ],
+    "n_features": 11,
+    "steps": [
+      {
+        "name": "clf",
+        "type": "LGBMClassifier"
+      }
+    ],
+    "warnings": []
+  },
+  {
+    "file": "cardio_risk_rf.joblib",
+    "payload_type": "dict",
+    "keys": [
+      "model",
+      "best_params",
+      "cv_pr_auc"
+    ],
+    "model_type": "Pipeline",
+    "features": [
+      "age",
+      "gender",
+      "height",
+      "weight",
+      "ap_hi",
+      "ap_lo",
+      "cholesterol",
+      "gluc",
+      "smoke",
+      "alco",
+      "active"
+    ],
+    "n_features": 11,
+    "steps": [
+      {
+        "name": "imputer",
+        "type": "SimpleImputer"
+      },
+      {
+        "name": "clf",
+        "type": "RandomForestClassifier"
+      }
+    ],
+    "warnings": []
+  }
+]

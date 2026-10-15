@@ -4,7 +4,7 @@ Two independent `sklearn.Pipeline` artefacts sharing the same `{prob, class, sha
 
 ```mermaid
 flowchart LR
-  CSV[Framingham CSV]:::external --> Prep[prepare.py<br/>70/15/15 stratified]:::code
+  CSV[Sulianova cardio CSV]:::external --> Prep[prepare.py<br/>70/15/15 stratified]:::code
   Prep --> Train[train.parquet]:::data
   Prep --> Val[val.parquet]:::data
   Prep --> Test[test.parquet]:::data

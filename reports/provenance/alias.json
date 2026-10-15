@@ -1,0 +1,21 @@
+{
+  "canonical_sha256": "d0b96ed0fb1209be8ed73ebb41d41225d6d106c2f291a285c6c9fc8950a2ad39",
+  "alias_sha256": "a62a5872cf7f8ca117967a164f8de1cf53c83d1b4da03a9dbb636af93b98f6e3",
+  "max_prediction_difference": 0.0,
+  "features": [
+    "age",
+    "gender",
+    "height",
+    "weight",
+    "ap_hi",
+    "ap_lo",
+    "cholesterol",
+    "gluc",
+    "smoke",
+    "alco",
+    "active"
+  ],
+  "alias_payload": "sklearn.pipeline.Pipeline",
+  "full_test_rows": 10501,
+  "full_test_max_prediction_difference": 0.0
+}

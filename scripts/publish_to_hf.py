@@ -18,11 +18,16 @@ import tempfile
 from pathlib import Path
 from typing import Any
 
+from artifact_manifest import digest, render, validate
 from huggingface_hub import HfApi
 from jinja2 import Environment, FileSystemLoader
 
 # Filenames shipped to the Hub. Main + baseline artefact.
-MODEL_FILES: tuple[str, ...] = ("cardio_risk_lgbm.joblib", "cardio_risk_rf.joblib")
+MODEL_FILES: tuple[str, ...] = (
+    "cardio_risk_lgbm.joblib",
+    "cardio_risk_rf.joblib",
+    "sklearn_model.joblib",
+)
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -131,6 +136,9 @@ def main() -> None:
         help="Destination for --dry-run rendered card.",
     )
     args = parser.parse_args()
+    manifest, values = validate(Path.cwd())
+    if args.repo_id != manifest["hub"]["repo_id"]:
+        raise SystemExit("Target differs from reviewed artifact manifest")
 
     artifacts_dir = Path(args.artifacts)
     summary: dict[str, Any] = {}
@@ -148,6 +156,11 @@ def main() -> None:
         "main_metrics": _main_metrics_from(summary),
         "test_size": test_size,
         "metrics_table": _format_metrics_table(summary),
+        "artifact_contract": render(manifest, values),
+        "artifact_revision": manifest["hub"]["revision"],
+        "main_artifact_sha256": next(
+            item["sha256"] for item in manifest["hub"]["files"] if item.get("variant") == "main"
+        ),
     }
 
     if args.dry_run:
@@ -175,8 +188,11 @@ def main() -> None:
         # Flatten the per-model artifact layout: copy only the joblib
         # files listed in MODEL_FILES from anywhere under artifacts/.
         found: set[str] = set()
+        expected = {item["path"]: item["sha256"] for item in manifest["hub"]["files"]}
         for item in artifacts_dir.rglob("*"):
             if item.is_file() and item.name in MODEL_FILES:
+                if item.name not in expected or digest(item) != expected[item.name]:
+                    raise SystemExit(f"Artifact differs from reviewed manifest: {item.name}")
                 dest = tmp_path / item.name
                 dest.write_bytes(item.read_bytes())
                 found.add(item.name)
@@ -191,12 +207,17 @@ def main() -> None:
         )
 
         api = HfApi(token=os.environ.get("HF_TOKEN"))
-        api.create_repo(repo_id=args.repo_id, exist_ok=True)
+        if api.whoami()["name"] != "kiselyovd":
+            raise SystemExit("HF owner guard failed: expected kiselyovd")
+        before = api.model_info(args.repo_id)
+        if before.id != manifest["hub"]["repo_id"]:
+            raise SystemExit("Unexpected target model repository")
         commit_message = f"Release {args.tag}" if args.tag else "Upload artifacts"
         api.upload_folder(
             repo_id=args.repo_id,
             folder_path=str(tmp_path),
             commit_message=commit_message,
+            parent_commit=before.sha,
         )
 
     print(f"Published to https://huggingface.co/{args.repo_id}")

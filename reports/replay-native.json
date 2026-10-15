@@ -1,0 +1,134 @@
+{
+  "status": "replayed_on_reconstructed_original_split",
+  "training_membership_verified": false,
+  "source_revision": null,
+  "python_version": "3.13.12",
+  "platform": "Windows",
+  "csv_sha256": "21a705d23381b0dfd6a6416da701b490744f1fc3b47e9ff3db3968c420ffa10c",
+  "split_rows_sha256": "e64f9a619e0b199fc43da2046b8a04e730a4f7ffabef70052761d7ba3138eb63",
+  "split_sizes": {
+    "train": 48999,
+    "val": 10500,
+    "test": 10501
+  },
+  "target": "cardio presence at medical examination; no prospective horizon",
+  "features": [
+    "age",
+    "gender",
+    "height",
+    "weight",
+    "ap_hi",
+    "ap_lo",
+    "cholesterol",
+    "gluc",
+    "smoke",
+    "alco",
+    "active"
+  ],
+  "age_unit": "rounded years from source_days/365.25",
+  "average_precision_definition": "sklearn.average_precision_score; legacy key pr_auc",
+  "packages": {
+    "numpy": "2.4.4",
+    "pandas": "2.3.3",
+    "scikit-learn": "1.8.0",
+    "lightgbm": "4.6.0",
+    "joblib": "1.5.3"
+  },
+  "models": {
+    "main": {
+      "roc_auc": 0.7977146329524751,
+      "pr_auc": 0.7811081311397825,
+      "f1": 0.7190499752597724,
+      "brier": 0.18240054443532983,
+      "threshold": 0.5,
+      "n": 10501,
+      "positive_rate": 0.49966669840967526,
+      "average_precision": 0.7811081311397825,
+      "accuracy": 0.7296447957337396,
+      "confusion_matrix": [
+        [
+          4029,
+          1225
+        ],
+        [
+          1614,
+          3633
+        ]
+      ],
+      "artifact": {
+        "file": "cardio_risk_lgbm.joblib",
+        "sha256": "d0b96ed0fb1209be8ed73ebb41d41225d6d106c2f291a285c6c9fc8950a2ad39",
+        "hub_revision": "5b1c8af3f5afcf236db26fa303b7c7d0917dd191"
+      }
+    },
+    "baseline": {
+      "roc_auc": 0.7948647255716084,
+      "pr_auc": 0.7794140387677455,
+      "f1": 0.7079358636086869,
+      "brier": 0.18372672645780252,
+      "threshold": 0.5,
+      "n": 10501,
+      "positive_rate": 0.49966669840967526,
+      "average_precision": 0.7794140387677455,
+      "accuracy": 0.7259308637272641,
+      "confusion_matrix": [
+        [
+          4135,
+          1119
+        ],
+        [
+          1759,
+          3488
+        ]
+      ],
+      "artifact": {
+        "file": "cardio_risk_rf.joblib",
+        "sha256": "eff065c65821d55059ac269c9dad644b34da5456f364020ccd13f22e15a9bb9b",
+        "hub_revision": "5b1c8af3f5afcf236db26fa303b7c7d0917dd191"
+      }
+    }
+  },
+  "artifact": {
+    "file": "cardio_risk_lgbm.joblib",
+    "sha256": "d0b96ed0fb1209be8ed73ebb41d41225d6d106c2f291a285c6c9fc8950a2ad39",
+    "hub_revision": "5b1c8af3f5afcf236db26fa303b7c7d0917dd191"
+  },
+  "prediction_arrays": {
+    "file": "replay-native.npz",
+    "sha256": "7528672d6029bb22d076d1616e50da75c5e9740f46aac094c380c73960a80877"
+  },
+  "source_files_sha256": {
+    "__init__.py": "e54bf9047d7f2b3ce220e1eecc69e51fb668f3653f6384349484c8edf1b13df2",
+    "__main__.py": "a6c8d65e4460baf9fa5c18b4ac858c570cea1e32cf1b91740b251f07793655fd",
+    "artifacts.py": "722b430d7d0008ed84f47b271b72ba43b22d113b17bbbcee4b73bd373fc27dce",
+    "data/__init__.py": "e0b908e2eb40df27947a338e23a0e7caf6cd0086dddda580892cac5eada00ead",
+    "data/cardio.py": "74175cb51c32de63368165e1ffaac968f5dcdf3ffa94707151cf22149e69b079",
+    "data/dataset.py": "dabdd978decd2866e949fbbbc3d565856f3d9d1240074c579bd552e07029364f",
+    "data/framingham.py": "8b0856ca592d01c1946d97c778d7b0ff883006634171ad079094aa1fce42c939",
+    "data/prepare.py": "ea0382145503d81956a61aefb82c2e0d9498932f6ff93a7684b30cf1750f35ae",
+    "evaluation/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evaluation/calibration.py": "055d48be8bd52b42a4e837bb4b4c516bdc8aef5aa06790f51bcc178db51595a2",
+    "evaluation/evaluate.py": "689f822a01085a46ec6f3f63746e8ffbd1d10310667d3d5dbdaf035705535072",
+    "evaluation/metrics.py": "30fb104a61ffceac4de535a0260af29ee6f598168fd1ef7cf9d2fcf79bb4ef6e",
+    "evaluation/replay.py": "13f0b7b0e8461516786efc79b1da18c532c482ca8c7728599ceed93ad5434af7",
+    "evaluation/summary.py": "8cee13d93eca76bd7c68dd37e5a9af41c83ee8e8b5c95d55a97f33c8174c1d17",
+    "explain.py": "14cb6ef5f7d9f40ee24cd84e16a04f8cfae441a3e44aa40480b30560be121e17",
+    "inference/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "inference/predict.py": "feace02aa4d9f94c02615433d7c8c3bbce7b6147641d9006ff6ae3d86fdeaa39",
+    "models/__init__.py": "e975e372ce6ff5a92303d88361479ee251816a13cff275a09dd5280a820851a4",
+    "models/factory.py": "5ec8940b45b95adc9db6c3513f40cabdd28c02f9c807f4482e0e842b95f66198",
+    "models/sklearn_pipeline.py": "4e0508640824d7f0621989231e00bcd8500c70a19b3dd1d394ce574668aadd25",
+    "serving/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "serving/dependencies.py": "61a81a211c48e86effddbc729bad3ebd2322ecb2e89c44b56183e8c00a832d85",
+    "serving/errors.py": "c5295cf4bc5671aecdf9acc3adec6dbd455f130aa8b7fad31b4d9039f84feed4",
+    "serving/main.py": "785bbcae64d19cab9aed905cf27b82e4ea3e6fc64a58e8ae7681c75f2314d13e",
+    "serving/routes.py": "cf01dd9c612f52e5862a18b0dbc21fe883288a69c584d35099076cde8c8da6f3",
+    "serving/schemas.py": "3a5f5d4f34445ed56ee93fd5eb29c0da7fc830a598fce61015da583d1c6a959a",
+    "training/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "training/train.py": "761a1741e969f61afed5eae52a8bf28a3d2a2e285b3f886e29844608a8a0cb04",
+    "utils/__init__.py": "f6df006af8d15539b763f2850ebd995c621afa3d19f6d20d3172c7861ad62aa5",
+    "utils/hf_hub.py": "b4738bc72656d43d806e6e9312cbbd1584518fd31796c9b65cb81139a62f4101",
+    "utils/logging.py": "7943c4f6781ccf6187b5ccd6da8a8f621cfeae908200c876720fa9c02b40f11c",
+    "utils/seed.py": "7e5089dfd465cf98637cf2cbf00d0c1b57860a202622cf632b126acf00674d11"
+  }
+}

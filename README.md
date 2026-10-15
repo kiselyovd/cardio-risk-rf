@@ -1,67 +1,86 @@
-# cardio-risk-rf
+# Cardiovascular Disease Classification
 
-[![CI](https://img.shields.io/github/actions/workflow/status/kiselyovd/cardio-risk-rf/test.yml?branch=main&style=for-the-badge&label=CI&logo=github)](https://github.com/kiselyovd/cardio-risk-rf/actions/workflows/test.yml)
-[![Docs](https://img.shields.io/badge/docs-mkdocs-526CFE?style=for-the-badge&logo=materialformkdocs&logoColor=white)](https://kiselyovd.github.io/cardio-risk-rf/)
-[![Coverage](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/kiselyovd/cardio-risk-rf/badges/coverage.json&style=for-the-badge&logo=pytest&logoColor=white)](https://github.com/kiselyovd/cardio-risk-rf/actions/workflows/test.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge&logo=opensourceinitiative&logoColor=white)](LICENSE)
-[![Python 3.12+](https://img.shields.io/badge/Python-3.12%20%7C%203.13-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
-[![HF Hub](https://img.shields.io/badge/🤗%20HF%20Hub-model-FFD21E?style=for-the-badge)](https://huggingface.co/kiselyovd/cardio-risk-rf)
+[![CI](https://github.com/kiselyovd/cardio-risk-rf/actions/workflows/test.yml/badge.svg)](https://github.com/kiselyovd/cardio-risk-rf/actions/workflows/test.yml) · [Docs](https://kiselyovd.github.io/cardio-risk-rf/)
 
-![cardio-risk-rf banner](docs/images/banner.jpg)
+Classify the **presence of cardiovascular disease at medical examination** from the Sulianova dataset's 11 features. LightGBM is the main estimator; RandomForest with median imputation is the baseline. The historical repository name is retained.
 
-Production-grade tabular cardiovascular-risk classifier on the Framingham Heart Study (4240 patients, 10-year CHD). Main model **LightGBM** with native NaN handling and SHAP explainability; baseline **RandomForest** with median imputation. Hydra-configured, Optuna-tuned, evaluated with ROC-AUC / PR-AUC / F1 / Brier + calibration plot, served by FastAPI as `/predict` with local SHAP top-5, distributed through Hugging Face Hub and MkDocs Material.
-
-> **Part of the [kiselyovd ML portfolio](https://github.com/kiselyovd#ml-portfolio)** - production-grade ML projects sharing one [cookiecutter template](https://github.com/kiselyovd/ml-project-template).
-
-📖 [English docs](https://kiselyovd.github.io/cardio-risk-rf/) • 🇷🇺 [Русский README](README.ru.md) • 🤗 [HF Hub model](https://huggingface.co/kiselyovd/cardio-risk-rf)
-
-## Dataset
-
-[sulianova Cardiovascular Disease Dataset](https://www.kaggle.com/datasets/sulianova/cardiovascular-disease-dataset). 70 000 rows × 11 clinical features, **balanced** target `cardio` (50/50). Features: age, gender, height/weight, systolic/diastolic BP, cholesterol & glucose (ordinal 1-2-3), smoking/alcohol/activity. Fetched by `scripts/sync_data.sh` from Kaggle with an HF Datasets fallback mirror. Split 70/15/15 stratified by target (`train=48999, val=10500, test=10501`). The original [Framingham Heart Study](https://www.kaggle.com/datasets/aasheesh200/framingham-heart-study-dataset) (4240 rows, 10-year prospective CHD target) is kept as a secondary cohort in `notebooks/02_benchmark.ipynb`.
-
-The original 49-row dataset from the `coro-detect` author is archived at `docs/legacy/original_dataset.csv` - see `docs/legacy/README.md` for rationale.
+[Model and weights](https://huggingface.co/kiselyovd/cardio-risk-rf) · [Evaluation protocol](docs/EVALUATION.md) · [Русский](README.ru.md)
 
 ## Results
 
-Filled in from `reports/metrics_summary.json` once the v0.1.0 run completes.
+<!-- ARTIFACT-MANIFEST:START -->
+### Current artifact and evaluation
 
-| Model | ROC-AUC | PR-AUC | F1 @ 0.5 | F1 @ t\* | Brier | t\* |
-|---|---|---|---|---|---|---|
-| **LightGBM** (main) | **79.8%** | **78.4%** | 71.7% | **73.9%** | 0.182 | 0.35 |
-| RandomForest (baseline) | 79.5% | 77.9% | 70.8% | 73.2% | 0.184 | 0.41 |
+**Replayed on the original 10501-row test fold, legacy seed42 protocol**
 
-Metrics on held-out test split (n=10 501, balanced target, sulianova Cardiovascular Disease Dataset). F1 reported at both the default 0.5 threshold and at the validation-set optimal threshold t\*. Calibration plot on val → `reports/calibration.png`; F1-optimal thresholds saved to `reports/metrics_thresholded.json`.
+| Metric | Value |
+|---|---:|
+| LightGBM ROC-AUC | 79.77% |
+| LightGBM average precision | 78.11% |
+| RF ROC-AUC | 79.49% |
+| RF average precision | 77.94% |
 
-## Visualizations
+Target is CVD presence at examination. The exact legacy split is 48999/10500/10501; original training row membership is unrecorded. Average precision uses sklearn AP.
 
-![ROC and PR curves](docs/images/roc_pr.png)
+[Evaluation record](https://github.com/kiselyovd/cardio-risk-rf/blob/main/reports/replay-native.json) · [Pinned model](https://huggingface.co/kiselyovd/cardio-risk-rf/tree/5b1c8af3f5afcf236db26fa303b7c7d0917dd191)
+<!-- ARTIFACT-MANIFEST:END -->
 
-ROC and Precision-Recall curves on the held-out test split - LightGBM (main) vs RandomForest (baseline).
+The source CSV, exact row split, model hashes and prediction arrays accompany the [new replay](reports/replay-native.json). Average precision is the sklearn AP measure; thresholds use 0.5. This is a retrospective research classifier, with no prospective ten-year horizon or clinical validation.
 
-![SHAP summary](docs/images/shap_summary.png)
+## Run the published artifact
 
-Global SHAP summary for the main LightGBM model - per-feature impact on the 10-year CHD risk prediction.
+The canonical files are **dict bundles** with `model`, `best_params` and `cv_pr_auc`. The fitted estimator is `bundle["model"]`. Only deserialize trusted model files after verifying their identity.
 
-![Calibration curve](docs/images/calibration.png)
+```python
+import hashlib
+import joblib
+import pandas as pd
+from huggingface_hub import hf_hub_download
 
-Reliability (calibration) curve on the validation split - predicted probability vs observed frequency.
-
-## Quick Start
+REPO = "kiselyovd/cardio-risk-rf"
+REVISION = "5b1c8af3f5afcf236db26fa303b7c7d0917dd191"
+path = hf_hub_download(REPO, "cardio_risk_lgbm.joblib", revision=REVISION)
+with open(path, "rb") as stream:
+    assert hashlib.file_digest(stream, "sha256").hexdigest() == "d0b96ed0fb1209be8ed73ebb41d41225d6d106c2f291a285c6c9fc8950a2ad39"
+model = joblib.load(path)["model"]
+# Synthetic interface example; age is rounded years, not the raw CSV's days.
+row = pd.DataFrame([dict(
+    age=54, gender=2, height=175, weight=80, ap_hi=130, ap_lo=85,
+    cholesterol=1, gluc=1, smoke=0, alco=0, active=1,
+)]).astype(float)
+print(float(model.predict_proba(row)[0, 1]))  # score for source label cardio=1
+```
+## Data and replay
 
 ```bash
-uv sync --all-groups
-bash scripts/sync_data.sh
-uv run python -m cardio_risk_rf.data.prepare --raw data/raw/framingham.csv --out data/processed
-uv run python scripts/train_all.py
+uv sync --frozen --all-groups
+uv run --frozen python scripts/fetch_data.py
+uv run --frozen python -m cardio_risk_rf.data.prepare --raw data/raw/cardio.csv --out data/processed
+uv run --frozen python -m cardio_risk_rf.evaluation.replay --csv data/raw/cardio.csv
 ```
 
-## Serving
+The original archive contains `cardio_train.csv`; the helper keeps the historical local name `cardio.csv`. It verifies archive and CSV hashes without requiring credentials or an unverified dataset mirror.
+
+The released RF records 48,999 training rows. The legacy sklearn float/ceil recipe yields **48,999 train / 10,500 validation / 10,501 test** rows. It is intentionally preserved for replay; a split change requires a new protocol version. Raw age in days is converted with `round(age / 365.25)` before inference. Preparation rejects stale output directories and saves row membership and hashes.
+
+## Explanations
+
+![SHAP attributions for the current 11-feature LightGBM model](docs/images/shap_summary.png)
+
+Model attributions on a recorded validation sample explain the fitted model's associations. The endpoint returns local top-five contributions. [Feature units and limitations](docs/EVALUATION.md).
+
+## Train or serve locally
 
 ```bash
-docker run --rm -p 8000:8000 ghcr.io/kiselyovd/cardio-risk-rf:v0.1.0
-curl -X POST localhost:8000/predict -H 'content-type: application/json' -d @data/widget/sample_patient.json
+make train     # scripts/train_all.py: Optuna main + RF grid search
+make evaluate  # canonical joblib and test.parquet arguments
+make serve     # FastAPI on port 8000; requires the two local model artifacts
 ```
 
-## License
+The container expects `artifacts/main/cardio_risk_lgbm.joblib` and `artifacts/baseline/cardio_risk_rf.joblib` mounted read-only; model weights are not baked into its image. [Serving](docs/serving.md) · [Training](docs/training.md).
 
-MIT - see [LICENSE](LICENSE). Dataset under CC-BY-4.0 (Framingham Heart Study).
+## Terms and provenance
+
+Project software is MIT. The original dataset publisher lists its license as **Unknown**; this repository does not assign MIT or Framingham's terms to those rows. The model Hub declaration and source-data terms are separate. [Component details](docs/LICENSES.md) · [CITATION.cff](CITATION.cff).
+
+The legacy Framingham/TenYearCHD loader and the earlier 49-row experiment are retained as historical material; neither describes the released 11-feature models. Numerical result blocks are generated from `artifact-manifest.json`; CI detects report/README drift.

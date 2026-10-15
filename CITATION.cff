@@ -1,0 +1,13 @@
+cff-version: 1.2.0
+message: "Cite this software and identify the source dataset separately."
+type: software
+title: "Cardiovascular disease presence classification with LightGBM and RandomForest"
+authors:
+  - family-names: Kiselyov
+    given-names: Daniil
+repository-code: "https://github.com/kiselyovd/cardio-risk-rf"
+license: MIT
+references:
+  - type: data
+    title: "Cardiovascular Disease dataset"
+    url: "https://www.kaggle.com/datasets/sulianova/cardiovascular-disease-dataset"

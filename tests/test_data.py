@@ -8,6 +8,17 @@ import pandas as pd
 from cardio_risk_rf.data.cardio import FEATURES, TARGET, load_cardio, split_stratified
 
 
+def test_original_70000_row_split_preserves_published_checkpoint_protocol() -> None:
+    # The released RF records _n_samples=48999. Preserve the legacy sklearn
+    # floating test_size/ceil recipe when reconstructing that experiment.
+    frame = pd.DataFrame({TARGET: np.tile([0, 1], 35000), "row_id": np.arange(70000)})
+    parts = split_stratified(frame, seed=42)
+    assert [len(part) for part in parts] == [48999, 10500, 10501]
+    rows = [set(part["row_id"]) for part in parts]
+    assert not rows[0] & rows[1] and not rows[0] & rows[2] and not rows[1] & rows[2]
+    assert len(set.union(*rows)) == 70000
+
+
 def _toy_df(n: int = 200, pos_rate: float = 0.50, seed: int = 0) -> pd.DataFrame:
     """Synthesize a table with the sulianova schema for splits/loader tests."""
     rng = np.random.default_rng(seed)

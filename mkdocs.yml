@@ -61,4 +61,6 @@ nav:
   - Architecture: architecture.md
   - Training: training.md
   - Serving: serving.md
+  - Evaluation contract: EVALUATION.md
+  - Component terms: LICENSES.md
   - API reference: api.md
