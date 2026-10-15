@@ -720,6 +720,7 @@ uv<span class="w"> </span>run<span class="w"> </span>--frozen<span class="w"> </
 uv<span class="w"> </span>run<span class="w"> </span>--frozen<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>cardio_risk_rf.evaluation.replay<span class="w"> </span>--csv<span class="w"> </span>data/raw/cardio.csv
 </code></pre></div>
 <p>For already-downloaded canonical files, pass <code>--artifact-dir /path/to/model-files</code>. The runner checks CSV and model hashes, records source/package identities and stores anonymized probability/target arrays. Fresh preparation writes train/val/test Parquet plus a split manifest into an empty destination.</p>
+<p>Code fingerprints normalize CRLF to LF for portable source comparisons. Model, CSV and array digests always cover exact raw bytes.</p>
 
 
 
