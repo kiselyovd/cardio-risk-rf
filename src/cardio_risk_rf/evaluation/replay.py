@@ -19,6 +19,11 @@ from ..data.cardio import FEATURES, TARGET, load_cardio, split_stratified
 from .metrics import compute_metrics
 
 
+def source_sha256(path: Path) -> str:
+    """Hash canonical LF source, while model/CSV/array digests retain exact raw bytes."""
+    return hashlib.sha256(path.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
+
+
 def replay(
     csv: Path,
     manifest_path: Path,
@@ -114,8 +119,9 @@ def replay(
     )
     report["prediction_arrays"] = {"file": arrays_path.name, "sha256": file_sha256(arrays_path)}
     package_root = Path(__file__).resolve().parents[1]
+    report["source_hash_format"] = "UTF-8 source bytes with CRLF normalized to LF"
     report["source_files_sha256"] = {
-        p.relative_to(package_root).as_posix(): file_sha256(p)
+        p.relative_to(package_root).as_posix(): source_sha256(p)
         for p in sorted(package_root.rglob("*.py"))
     }
     out.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8", newline="\n")

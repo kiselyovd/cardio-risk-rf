@@ -8,6 +8,8 @@ import numpy as np
 import pytest
 from sklearn.metrics import average_precision_score, f1_score, roc_auc_score
 
+from cardio_risk_rf.evaluation.replay import source_sha256
+
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location(
     "artifact_manifest", ROOT / "scripts/artifact_manifest.py"
@@ -15,6 +17,14 @@ SPEC = importlib.util.spec_from_file_location(
 assert SPEC and SPEC.loader
 contract = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(contract)
+
+
+def test_source_fingerprints_are_portable_across_checkout_line_endings(tmp_path: Path) -> None:
+    unix, windows = tmp_path / "unix.py", tmp_path / "windows.py"
+    unix.write_bytes(b"value = 1\n")
+    windows.write_bytes(b"value = 1\r\n")
+    assert source_sha256(unix) == source_sha256(windows)
+    assert contract.digest(unix) != contract.digest(windows)
 
 
 def test_native_scores_match_their_saved_arrays() -> None:
