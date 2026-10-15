@@ -1,16 +1,51 @@
 {
+  "schema_version": 2,
   "asset": "docs/images/social-preview.png",
-  "sha256": "7a9e6f0186d8ccda604ce80f0eec223fedc4a686286138587377e6c8baade60e",
   "width": 1280,
   "height": 640,
-  "bytes": 91291,
-  "kind": "project evidence composition; no generated model output",
-  "note": "SHAP on 512 validation rows, seed 42; CVD presence at examination, no causal or ten-year claim",
-  "sources": [
+  "kind": "identity preview composed from a reviewed actual project figure",
+  "source": {
+    "repository": "kiselyovd/cardio-risk-rf",
+    "revision": "8bd54e3a3706ec4bbfdf24d9ff89db646b196517",
+    "path": "docs/images/shap_summary.png",
+    "sha256": "812fe2654db8037decd440eed06b2cc1505fee6f722458d45c5066ad096992b0"
+  },
+  "source_figure_provenance": {
+    "asset": "docs/images/social-preview.png",
+    "sha256": "7a9e6f0186d8ccda604ce80f0eec223fedc4a686286138587377e6c8baade60e",
+    "width": 1280,
+    "height": 640,
+    "bytes": 91291,
+    "kind": "project evidence composition; no generated model output",
+    "note": "SHAP on 512 validation rows, seed 42; CVD presence at examination, no causal or ten-year claim",
+    "sources": [
+      {
+        "path": "docs\\images\\shap_summary.png",
+        "sha256": "812fe2654db8037decd440eed06b2cc1505fee6f722458d45c5066ad096992b0"
+      }
+    ],
+    "renderer": "portfolio-integrity-2026-10-15/render_previews.py"
+  },
+  "renderer": {
+    "repository": "kiselyovd/kiselyovd.github.io",
+    "revision": "7efec9a44382677b58cb657843446da104d8bf57",
+    "path": "automation/render_social_previews.py",
+    "sha256": "381021e708028e2bf42f0f97ab32d66df71747fdfced5fda3922bc06f805488b"
+  },
+  "outputs": [
     {
-      "path": "docs\\images\\shap_summary.png",
-      "sha256": "812fe2654db8037decd440eed06b2cc1505fee6f722458d45c5066ad096992b0"
+      "project": "cardio-risk-rf",
+      "theme": "dark",
+      "path": "docs/images/social-preview.png",
+      "sha256": "e504582d79bf6255f6cf263444451d1cbfbb0805079d9622389151a30d858f58",
+      "bytes": 83498
+    },
+    {
+      "project": "cardio-risk-rf",
+      "theme": "light",
+      "path": "docs/images/social-preview-light.png",
+      "sha256": "544dc0c77da157e6a801b87f584925b0f7c9e86d6088f72807c818724370efdf",
+      "bytes": 84457
     }
-  ],
-  "renderer": "portfolio-integrity-2026-10-15/render_previews.py"
+  ]
 }

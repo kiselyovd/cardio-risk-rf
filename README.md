@@ -6,7 +6,7 @@ Classify the **presence of cardiovascular disease at medical examination** from 
 
 [Model and weights](https://huggingface.co/kiselyovd/cardio-risk-rf) · [Evaluation protocol](docs/EVALUATION.md) · [Русский](README.ru.md)
 
-[![Actual feature attribution from the 512-row validation sample](docs/images/social-preview.png)](https://kiselyovd.github.io/cardio-risk-rf/EVALUATION/)
+[![Actual feature attribution from the 512-row validation sample](docs/images/shap_summary.png)](https://kiselyovd.github.io/cardio-risk-rf/EVALUATION/)
 
 <!-- ARTIFACT-OVERVIEW:START -->
 LightGBM ROC-AUC **79.77%** · LightGBM average precision **78.11%**. [Evaluation and scope](https://github.com/kiselyovd/cardio-risk-rf/blob/main/reports/replay-native.json).
