@@ -14,7 +14,7 @@
         <link rel="prev" href="../training/">
       
       
-        <link rel="next" href="../api/">
+        <link rel="next" href="../EVALUATION/">
       
       
         
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#serving" class="md-skip">
+        <a href="#serving-the-released-models" class="md-skip">
           Skip to content
         </a>
       
@@ -303,6 +303,44 @@
   
   
     <li class="md-tabs__item">
+      <a href="../EVALUATION/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Evaluation contract
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../LICENSES/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Component terms
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
       <a href="../api/" class="md-tabs__link">
         
   
@@ -511,10 +549,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#run" class="md-nav__link">
+  <a href="#install-model-files" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Run
+        Install model files
       
     </span>
   </a>
@@ -522,10 +560,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#endpoints" class="md-nav__link">
+  <a href="#response" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Endpoints
+        Response
       
     </span>
   </a>
@@ -533,43 +571,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#request-patientfeatures" class="md-nav__link">
+  <a href="#container" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Request - PatientFeatures
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#response-predictionresponse" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Response - PredictionResponse
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#curl-example" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        curl example
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Configuration
+        Container
       
     </span>
   </a>
@@ -580,6 +585,60 @@
   
 </nav>
       
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EVALUATION/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Evaluation contract
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LICENSES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Component terms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -631,129 +690,25 @@
   
 
 
-<h1 id="serving">Serving</h1>
-<p>The main and baseline models are exposed behind a single FastAPI app (<code>cardio_risk_rf.serving.main:app</code>). Both are loaded lazily from <code>artifacts/{main,baseline}/*.joblib</code> and selected via a query parameter.</p>
-<h2 id="run">Run</h2>
-<div class="highlight"><pre><span></span><code><span class="c1"># local dev</span>
-uv<span class="w"> </span>run<span class="w"> </span>uvicorn<span class="w"> </span>cardio_risk_rf.serving.main:app<span class="w"> </span>--host<span class="w"> </span><span class="m">0</span>.0.0.0<span class="w"> </span>--port<span class="w"> </span><span class="m">8000</span>
-
-<span class="c1"># docker</span>
-docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-p<span class="w"> </span><span class="m">8000</span>:8000<span class="w"> </span>ghcr.io/kiselyovd/cardio-risk-rf:v0.1.0
+<h1 id="serving-the-released-models">Serving the released models</h1>
+<p>The API consumes the 11-feature Sulianova schema. <code>age</code> is rounded years; the response score refers to <code>cardio=1</code> at medical examination.</p>
+<h2 id="install-model-files">Install model files</h2>
+<p>Use the exact pinned/checksummed bundles described in the <a href="https://github.com/kiselyovd/cardio-risk-rf#run-the-published-artifact">README</a>. The default paths are:</p>
+<ul>
+<li><code>artifacts/main/cardio_risk_lgbm.joblib</code></li>
+<li><code>artifacts/baseline/cardio_risk_rf.joblib</code></li>
+</ul>
+<p><code>CARDIO_MAIN_CKPT</code> and <code>CARDIO_BASELINE_CKPT</code> can point to already-cached verified files. They are operator-controlled paths, not upload fields. Bundles and plain Pipelines are accepted.</p>
+<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>--frozen<span class="w"> </span>uvicorn<span class="w"> </span>cardio_risk_rf.serving.main:app<span class="w"> </span>--port<span class="w"> </span><span class="m">8000</span>
+curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://127.0.0.1:8000/predict<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;content-type: application/json&#39;</span><span class="w"> </span>-d<span class="w"> </span>@data/widget/sample_patient.json
 </code></pre></div>
-<h2 id="endpoints">Endpoints</h2>
-<table>
-<thead>
-<tr>
-<th>Method</th>
-<th>Path</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>GET</code></td>
-<td><code>/health</code></td>
-<td>Liveness probe - returns <code>{"status": "ok", "version": &lt;model_version&gt;}</code>.</td>
-</tr>
-<tr>
-<td><code>POST</code></td>
-<td><code>/predict</code></td>
-<td>Score a single patient. Query param <code>model</code> selects <code>main</code> (default) or <code>baseline</code>.</td>
-</tr>
-</tbody>
-</table>
-<p><code>/predict</code> returns HTTP 422 if every feature is <code>null</code>, and HTTP 503 if the joblib checkpoint is missing from disk.</p>
-<h2 id="request-patientfeatures">Request - <code>PatientFeatures</code></h2>
-<p>Schema source: <code>cardio_risk_rf.serving.schemas.PatientFeatures</code>. All fields are <strong>optional</strong> - missing values are forwarded as <code>NaN</code> into the pipeline (LightGBM main handles this natively; the baseline imputes with the train-set median).</p>
-<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">PatientFeatures</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
-    <span class="n">male</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span>              <span class="c1"># 0 or 1</span>
-    <span class="n">age</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span>               <span class="c1"># years, 0-120</span>
-    <span class="n">education</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span>       <span class="c1"># 1-4 (Framingham encoding)</span>
-    <span class="n">currentSmoker</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span>     <span class="c1"># 0 or 1</span>
-    <span class="n">cigsPerDay</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span>      <span class="c1"># cigarettes per day</span>
-    <span class="n">BPMeds</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span>          <span class="c1"># 0 or 1 - on BP medication</span>
-    <span class="n">prevalentStroke</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span>   <span class="c1"># 0 or 1</span>
-    <span class="n">prevalentHyp</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span>      <span class="c1"># 0 or 1 - prevalent hypertension</span>
-    <span class="n">diabetes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span>          <span class="c1"># 0 or 1</span>
-    <span class="n">totChol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span>         <span class="c1"># total cholesterol (mg/dL)</span>
-    <span class="n">sysBP</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span>           <span class="c1"># systolic BP (mmHg)</span>
-    <span class="n">diaBP</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span>           <span class="c1"># diastolic BP (mmHg)</span>
-    <span class="n">BMI</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span>             <span class="c1"># kg/m²</span>
-    <span class="n">heartRate</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span>       <span class="c1"># bpm</span>
-    <span class="n">glucose</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span>         <span class="c1"># mg/dL</span>
-</code></pre></div>
-<h2 id="response-predictionresponse">Response - <code>PredictionResponse</code></h2>
-<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">ShapEntry</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
-    <span class="n">feature</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">value</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span>
-    <span class="n">shap</span><span class="p">:</span> <span class="nb">float</span>
-
-
-<span class="k">class</span><span class="w"> </span><span class="nc">PredictionResponse</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
-    <span class="n">probability</span><span class="p">:</span> <span class="nb">float</span>            <span class="c1"># P(TenYearCHD=1)</span>
-    <span class="bp">cls</span><span class="p">:</span> <span class="nb">int</span>                      <span class="c1"># 0 or 1, serialised as &quot;class&quot;</span>
-    <span class="n">threshold</span><span class="p">:</span> <span class="nb">float</span>              <span class="c1"># decision threshold used (default 0.5)</span>
-    <span class="n">shap_top5</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">ShapEntry</span><span class="p">]</span>    <span class="c1"># 5 features with largest |SHAP| on this request</span>
-    <span class="n">model_version</span><span class="p">:</span> <span class="nb">str</span>            <span class="c1"># e.g. &quot;v0.1.0&quot;</span>
-    <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span>               <span class="c1"># &quot;cardio_risk_lgbm&quot; or &quot;cardio_risk_rf&quot;</span>
-    <span class="n">request_id</span><span class="p">:</span> <span class="nb">str</span>               <span class="c1"># 12-char UUID prefix for tracing</span>
-</code></pre></div>
-<h2 id="curl-example">curl example</h2>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s1">&#39;localhost:8000/predict?model=main&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;content-type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span>@data/widget/sample_patient.json
-</code></pre></div>
-<p>Using the main model on the bundled sample patient, a typical response looks like:</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;probability&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.18</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;class&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;threshold&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;shap_top5&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="p">{</span><span class="nt">&quot;feature&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;age&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">52</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;shap&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.42</span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span><span class="nt">&quot;feature&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sysBP&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">138</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;shap&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.21</span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span><span class="nt">&quot;feature&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cigsPerDay&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;shap&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.14</span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span><span class="nt">&quot;feature&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;totChol&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">220</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;shap&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">-0.08</span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span><span class="nt">&quot;feature&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;BMI&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">24.1</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;shap&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">-0.05</span><span class="p">}</span>
-<span class="w">  </span><span class="p">],</span>
-<span class="w">  </span><span class="nt">&quot;model_version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;v0.1.0&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;model_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cardio_risk_lgbm&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;request_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a1b2c3d4e5f6&quot;</span>
-<span class="p">}</span>
-</code></pre></div>
-<p>To score the same patient with the baseline RandomForest, pass <code>?model=baseline</code>.</p>
-<h2 id="configuration">Configuration</h2>
-<p>Environment variables read by <code>cardio_risk_rf.serving.routes</code>:</p>
-<table>
-<thead>
-<tr>
-<th>Variable</th>
-<th>Default</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>CARDIO_MAIN_CKPT</code></td>
-<td><code>artifacts/main/cardio_risk_lgbm.joblib</code></td>
-<td>Main model path.</td>
-</tr>
-<tr>
-<td><code>CARDIO_BASELINE_CKPT</code></td>
-<td><code>artifacts/baseline/cardio_risk_rf.joblib</code></td>
-<td>Baseline model path.</td>
-</tr>
-<tr>
-<td><code>CARDIO_MODEL_VERSION</code></td>
-<td><code>v0.1.0</code></td>
-<td>Reported in <code>/health</code> and response body.</td>
-</tr>
-<tr>
-<td><code>CARDIO_THRESHOLD</code></td>
-<td><code>0.5</code></td>
-<td>Decision threshold applied to <code>probability</code>.</td>
-</tr>
-</tbody>
-</table>
+<p>Append <code>?model=baseline</code> to compare the RF estimator. Inputs are <code>age,gender,height,weight,ap_hi,ap_lo,cholesterol,gluc,smoke,alco,active</code>; field descriptions and range validation live in <code>serving/schemas.py</code>. Null values use the fitted model's missing-value handling; an all-null record returns 422.</p>
+<h2 id="response">Response</h2>
+<p>The JSON contains <code>probability</code>, <code>class</code>, <code>threshold</code>, <code>shap_top5</code>, <code>model_version</code>, <code>model_name</code>, and <code>request_id</code>. <code>CARDIO_MODEL_VERSION</code> identifies the deployed artifact; <code>CARDIO_THRESHOLD</code> defaults to 0.5. SHAP contributions describe fitted-model associations and retain their explainer output scale; they are not causal effects or clinical recommendations.</p>
+<h2 id="container">Container</h2>
+<p><code>docker compose up api</code> mounts <code>./artifacts:/app/artifacts:ro</code>. Weights are not in the image. Prepare or download the reviewed model files before launch; a successful build alone does not establish inference availability. The service runs on port 8000.</p>
+<p>The training target is cross-sectional. The retained Framingham loader/legacy notes do not define this API's released model contract.</p>
 
 
 

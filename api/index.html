@@ -11,7 +11,7 @@
       
       
       
-        <link rel="prev" href="../serving/">
+        <link rel="prev" href="../LICENSES/">
       
       
       
@@ -297,6 +297,44 @@
   
   
   
+  
+    <li class="md-tabs__item">
+      <a href="../EVALUATION/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Evaluation contract
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../LICENSES/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Component terms
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
     
   
   
@@ -457,6 +495,60 @@
     
   
     Serving
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EVALUATION/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Evaluation contract
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LICENSES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Component terms
   
 
     
@@ -752,6 +844,23 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cardio_risk_rf.data.prepare.prepare_dataset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        prepare_dataset
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -2140,6 +2249,89 @@ to integer years. Column order is stabilised to FEATURES + [TARGET].</p>
 
 <h4 id="cardio_risk_rf.data.prepare-functions">Functions</h4>
 
+<div class="doc doc-object doc-function">
+
+
+<h5 id="cardio_risk_rf.data.prepare.prepare_dataset" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">prepare_dataset</span>
+
+
+</h5>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">prepare_dataset</span><span class="p">(</span><span class="n">raw</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">out</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">42</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Prepare exact legacy split membership without mixing existing destination files.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>src/cardio_risk_rf/data/prepare.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">prepare_dataset</span><span class="p">(</span><span class="n">raw</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">out</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">42</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Prepare exact legacy split membership without mixing existing destination files.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">out</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="ow">and</span> <span class="nb">any</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="o">!=</span> <span class="s2">&quot;.gitkeep&quot;</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">out</span><span class="o">.</span><span class="n">iterdir</span><span class="p">()):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Processed destination must be empty; existing files are preserved&quot;</span><span class="p">)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">load_cardio</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;_source_row&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">))</span>
+    <span class="n">train_df</span><span class="p">,</span> <span class="n">val_df</span><span class="p">,</span> <span class="n">test_df</span> <span class="o">=</span> <span class="n">split_stratified</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+    <span class="n">frames</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="n">train_df</span><span class="p">,</span> <span class="s2">&quot;val&quot;</span><span class="p">:</span> <span class="n">val_df</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">:</span> <span class="n">test_df</span><span class="p">}</span>
+    <span class="n">rows</span> <span class="o">=</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="n">frame</span><span class="p">[</span><span class="s2">&quot;_source_row&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">frame</span> <span class="ow">in</span> <span class="n">frames</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+    <span class="n">serialized</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="s2">&quot;:&quot;</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="k">with</span> <span class="n">raw</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">stream</span><span class="p">:</span>
+        <span class="n">csv_sha256</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">file_digest</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="s2">&quot;sha256&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+    <span class="n">manifest</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;schema_version&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s2">&quot;seed&quot;</span><span class="p">:</span> <span class="n">seed</span><span class="p">,</span>
+        <span class="s2">&quot;source_csv_sha256&quot;</span><span class="p">:</span> <span class="n">csv_sha256</span><span class="p">,</span>
+        <span class="s2">&quot;protocol&quot;</span><span class="p">:</span> <span class="s2">&quot;legacy sklearn float test_size ceil; requested 70/15/15&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;sizes&quot;</span><span class="p">:</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">frame</span> <span class="ow">in</span> <span class="n">frames</span><span class="o">.</span><span class="n">items</span><span class="p">()},</span>
+        <span class="s2">&quot;age_transform&quot;</span><span class="p">:</span> <span class="s2">&quot;round(source_days / 365.25) integer years&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;records_sha256&quot;</span><span class="p">:</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">serialized</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">(),</span>
+        <span class="s2">&quot;splits&quot;</span><span class="p">:</span> <span class="n">rows</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">out</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">frame</span> <span class="ow">in</span> <span class="n">frames</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">frame</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;_source_row&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span><span class="n">out</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.parquet&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">out</span> <span class="o">/</span> <span class="s2">&quot;split-manifest.json&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span>
+        <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">manifest</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Prepared source=</span><span class="si">{</span><span class="n">csv_sha256</span><span class="si">}</span><span class="s2">, sizes=</span><span class="si">{</span><span class="n">manifest</span><span class="p">[</span><span class="s1">&#39;sizes&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">manifest</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
 
 
   </div>
@@ -2846,7 +3038,7 @@ to integer years. Column order is stabilised to FEATURES + [TARGET].</p>
 <span class="normal">18</span>
 <span class="normal">19</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">load_model</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Load a joblib checkpoint from disk.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">joblib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">load_pipeline</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -2878,11 +3070,25 @@ to integer years. Column order is stabilised to FEATURES + [TARGET].</p>
 <span class="normal">26</span>
 <span class="normal">27</span>
 <span class="normal">28</span>
-<span class="normal">29</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">features</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">features</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Run inference on a single feature mapping and return pred + class probabilities.&quot;&quot;&quot;</span>
     <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
-    <span class="n">x</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">features</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">unknown</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">features</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">FEATURES</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">unknown</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown cardio features: </span><span class="si">{</span><span class="nb">sorted</span><span class="p">(</span><span class="n">unknown</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">features</span><span class="o">.</span><span class="n">values</span><span class="p">()):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;At least one feature is required&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">features</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;age&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="nb">float</span><span class="p">(</span><span class="n">features</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">])</span> <span class="o">&lt;=</span> <span class="mi">120</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Model age is in rounded years, not source days&quot;</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([{</span><span class="n">name</span><span class="p">:</span> <span class="n">features</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">FEATURES</span><span class="p">}])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
     <span class="n">proba</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">x</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
     <span class="n">pred</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
     <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;pred&quot;</span><span class="p">:</span> <span class="n">pred</span><span class="p">,</span> <span class="s2">&quot;proba&quot;</span><span class="p">:</span> <span class="n">proba</span><span class="p">}</span>
@@ -2910,24 +3116,36 @@ to integer years. Column order is stabilised to FEATURES + [TARGET].</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/cardio_risk_rf/inference/predict.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">32</span>
-<span class="normal">33</span>
-<span class="normal">34</span>
-<span class="normal">35</span>
-<span class="normal">36</span>
-<span class="normal">37</span>
-<span class="normal">38</span>
-<span class="normal">39</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">39</span>
 <span class="normal">40</span>
-<span class="normal">41</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;CLI entry point - parse args, load model, predict, print JSON.&quot;&quot;&quot;</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--checkpoint&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--input&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--model&quot;</span><span class="p">,</span> <span class="s2">&quot;--checkpoint&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;checkpoint&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--input&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;JSON object or path to a JSON feature file&quot;</span><span class="p">)</span>
     <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
     <span class="n">configure_logging</span><span class="p">()</span>
     <span class="n">model</span> <span class="o">=</span> <span class="n">load_model</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">checkpoint</span><span class="p">)</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="n">predict</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">input</span><span class="p">)</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">input</span> <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">lstrip</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;{&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="n">Path</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">input</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">features</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Input must be a JSON object of cardio features&quot;</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">predict</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">features</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
 </code></pre></div></td></tr></table></div>
             </details>

@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#cardio-risk-rf" class="md-skip">
+        <a href="#cardiovascular-disease-classification" class="md-skip">
           Skip to content
         </a>
       
@@ -301,6 +301,44 @@
   
   
     <li class="md-tabs__item">
+      <a href="EVALUATION/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Evaluation contract
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="LICENSES/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Component terms
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
       <a href="api/" class="md-tabs__link">
         
   
@@ -428,54 +466,38 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#at-a-glance" class="md-nav__link">
+  <a href="#results" class="md-nav__link">
     <span class="md-ellipsis">
       
-        At a glance
+        Results
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Results">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#current-artifact-and-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Current artifact and evaluation
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#navigation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Navigation
-      
-    </span>
-  </a>
+        
+      </ul>
+    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#links" class="md-nav__link">
+  <a href="#inspect-the-model" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Links
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#visualizations" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Visualizations
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#intended-use-and-disclaimer" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Intended use and disclaimer
+        Inspect the model
       
     </span>
   </a>
@@ -578,6 +600,60 @@
   
   
     <li class="md-nav__item">
+      <a href="EVALUATION/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Evaluation contract
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="LICENSES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Component terms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="api/" class="md-nav__link">
         
   
@@ -618,40 +694,47 @@
   
 
 
-<h1 id="cardio-risk-rf">cardio-risk-rf</h1>
-<p><img alt="cardio-risk-rf banner" src="images/banner.jpg" /></p>
-<p>Production-grade tabular cardiovascular-risk classifier on the Framingham Heart Study - 10-year coronary heart disease risk prediction with LightGBM (main) and RandomForest (baseline), served through FastAPI with per-patient SHAP explanations.</p>
-<h2 id="at-a-glance">At a glance</h2>
-<ul>
-<li><strong>Dataset:</strong> <a href="https://www.kaggle.com/datasets/sulianova/cardiovascular-disease-dataset">sulianova Cardiovascular Disease Dataset</a> - 70 000 patients × 11 clinical features, balanced target <code>cardio</code> (~50/50), stratified 70/15/15 split. Framingham (4240 rows) kept as secondary benchmark cohort.</li>
-<li><strong>Main model:</strong> LightGBM with native NaN handling, tuned by Optuna (50 trials, TPE sampler, early stopping on val).</li>
-<li><strong>Baseline:</strong> RandomForest with <code>SimpleImputer(median)</code> + <code>GridSearchCV</code> - gives a calibration reference for the main model.</li>
-<li><strong>Stack:</strong> Python 3.12 / 3.13 · scikit-learn · LightGBM · Optuna · SHAP · FastAPI · Hydra · DVC · MkDocs Material · uv.</li>
-<li><strong>Serving:</strong> FastAPI <code>/predict</code> returns <code>{probability, class, threshold, shap_top5, model_version, request_id}</code>. CPU-only - no GPU needed for training or inference.</li>
-</ul>
-<h2 id="navigation">Navigation</h2>
-<ul>
-<li><a href="architecture/">Architecture</a> - data flow, pipeline layout, mermaid diagram, and the main-vs-baseline design decisions.</li>
-<li><a href="training/">Training</a> - CLI commands, Optuna/Grid hyperparameter notes, and the one-time Framingham mirror runbook.</li>
-<li><a href="serving/">Serving</a> - <code>/predict</code> endpoint contract, Pydantic schemas, curl example.</li>
-<li><a href="api/">API reference</a> - mkdocstrings-generated reference for the <code>cardio_risk_rf</code> package.</li>
-</ul>
-<h2 id="links">Links</h2>
-<ul>
-<li>GitHub: <a href="https://github.com/kiselyovd/cardio-risk-rf">kiselyovd/cardio-risk-rf</a></li>
-<li>Hugging Face model: <a href="https://huggingface.co/kiselyovd/cardio-risk-rf">kiselyovd/cardio-risk-rf</a></li>
-<li>Russian README: <a href="https://github.com/kiselyovd/cardio-risk-rf/blob/main/README.ru.md">README.ru.md</a></li>
-<li>Template: <a href="https://github.com/kiselyovd/ml-project-template">kiselyovd/ml-project-template</a></li>
-</ul>
-<h2 id="visualizations">Visualizations</h2>
-<p><img alt="ROC and PR curves" src="images/roc_pr.png" /></p>
-<p>ROC and Precision-Recall curves on the held-out test split - LightGBM (main) vs RandomForest (baseline).</p>
-<p><img alt="SHAP summary" src="images/shap_summary.png" /></p>
-<p>Global SHAP summary for the main LightGBM model - per-feature impact on the 10-year CHD risk prediction.</p>
-<p><img alt="Calibration curve" src="images/calibration.png" /></p>
-<p>Reliability (calibration) curve on the validation split - predicted probability vs observed frequency.</p>
-<h2 id="intended-use-and-disclaimer">Intended use and disclaimer</h2>
-<p>This model is a <strong>portfolio/research demo</strong> trained on the public Framingham Heart Study subset. It is <strong>not a medical device</strong> and must not be used for clinical decision-making, diagnosis, or patient-facing risk communication. Calibration, fairness, and distribution shift have not been validated outside the original cohort. Use only for educational purposes, ML-engineering review, and to compare against other baselines on the same dataset.</p>
+<h1 id="cardiovascular-disease-classification">Cardiovascular Disease Classification</h1>
+<p>Classify the <strong>presence of cardiovascular disease at medical examination</strong> from the Sulianova dataset's 11 features. LightGBM is the main estimator; RandomForest with median imputation is the baseline. The historical repository name is retained.</p>
+<p><a href="https://huggingface.co/kiselyovd/cardio-risk-rf">Model and weights</a> · <a href="EVALUATION/">Evaluation protocol</a> · <a href="https://github.com/kiselyovd/cardio-risk-rf/blob/main/README.ru.md">Русский</a></p>
+<h2 id="results">Results</h2>
+<!-- ARTIFACT-MANIFEST:START -->
+<h3 id="current-artifact-and-evaluation">Current artifact and evaluation</h3>
+<p><strong>Replayed on the original 10501-row test fold, legacy seed42 protocol</strong></p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th style="text-align: right;">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LightGBM ROC-AUC</td>
+<td style="text-align: right;">79.77%</td>
+</tr>
+<tr>
+<td>LightGBM average precision</td>
+<td style="text-align: right;">78.11%</td>
+</tr>
+<tr>
+<td>RF ROC-AUC</td>
+<td style="text-align: right;">79.49%</td>
+</tr>
+<tr>
+<td>RF average precision</td>
+<td style="text-align: right;">77.94%</td>
+</tr>
+</tbody>
+</table>
+<p>Target is CVD presence at examination. The exact legacy split is 48999/10500/10501; original training row membership is unrecorded. Average precision uses sklearn AP.</p>
+<p><a href="https://github.com/kiselyovd/cardio-risk-rf/blob/main/reports/replay-native.json">Evaluation record</a> · <a href="https://huggingface.co/kiselyovd/cardio-risk-rf/tree/5b1c8af3f5afcf236db26fa303b7c7d0917dd191">Pinned model</a></p>
+<!-- ARTIFACT-MANIFEST:END -->
+
+<p>The source CSV, exact row split, model hashes and prediction arrays accompany the <a href="https://github.com/kiselyovd/cardio-risk-rf/blob/main/reports/replay-native.json">new replay</a>. Average precision is the sklearn AP measure; thresholds use 0.5. This is a retrospective research classifier, with no prospective ten-year horizon or clinical validation.</p>
+<h2 id="inspect-the-model">Inspect the model</h2>
+<p><img alt="Current model SHAP associations" src="images/shap_summary.png" /></p>
+<p><a href="https://github.com/kiselyovd/cardio-risk-rf#run-the-published-artifact">Run the published artifact</a> · <a href="EVALUATION/">Data and preprocessing contract</a> · <a href="LICENSES/">Component licenses</a></p>
 
 
 

@@ -21,7 +21,7 @@
     
     
       
-        <title>Legacy dataset - cardio-risk-rf</title>
+        <title>Index - cardio-risk-rf</title>
       
     
     
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Legacy dataset
+              Index
             
           </span>
         </div>
@@ -297,6 +297,44 @@
   
   
     <li class="md-tabs__item">
+      <a href="../EVALUATION/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Evaluation contract
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../LICENSES/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Component terms
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
       <a href="../api/" class="md-tabs__link">
         
   
@@ -472,6 +510,60 @@
   
   
     <li class="md-nav__item">
+      <a href="../EVALUATION/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Evaluation contract
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LICENSES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Component terms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../api/" class="md-nav__link">
         
   
@@ -512,9 +604,12 @@
   
 
 
+<blockquote>
+<p>Historical material. The currently released 11-feature weights use Sulianova/cardio. See the <a href="../EVALUATION/">current evaluation contract</a>.</p>
+</blockquote>
 <h1 id="legacy-dataset">Legacy dataset</h1>
 <p><code>original_dataset.csv</code> is the 49-row cardiovascular-biomarker table shipped with the original <code>coro-detect</code> repository by the same author, with Cyrillic column names (<code>болезнь, Возраст, Лейкоциты, КДО, склеростин, WIF-1, GSK-3α</code>).</p>
-<p>It is preserved here for provenance. The production pipeline was <strong>switched</strong> to the Framingham Heart Study dataset because 49 rows do not support a legitimate held-out test split or reliable calibration reporting. See <code>docs/superpowers/specs/2026-04-17-cardio-risk-rf-design.md</code> §1 for the full rationale. This spec is maintained in the portfolio's top-level <code>docs/superpowers/specs/</code> directory, not in this repo.</p>
+<p>It is preserved here for provenance. Earlier notes referred to a Framingham prototype. The currently published 11-feature models instead use Sulianova/cardio, as documented in the current evaluation contract.</p>
 <p>To replay the original on the new pipeline for a demo, see <code>notebooks/02_demo.ipynb</code>.</p>
 
 
