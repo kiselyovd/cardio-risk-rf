@@ -1,0 +1,16 @@
+{
+  "asset": "docs/images/social-preview.png",
+  "sha256": "7a9e6f0186d8ccda604ce80f0eec223fedc4a686286138587377e6c8baade60e",
+  "width": 1280,
+  "height": 640,
+  "bytes": 91291,
+  "kind": "project evidence composition; no generated model output",
+  "note": "SHAP on 512 validation rows, seed 42; CVD presence at examination, no causal or ten-year claim",
+  "sources": [
+    {
+      "path": "docs\\images\\shap_summary.png",
+      "sha256": "812fe2654db8037decd440eed06b2cc1505fee6f722458d45c5066ad096992b0"
+    }
+  ],
+  "renderer": "portfolio-integrity-2026-10-15/render_previews.py"
+}

@@ -6,6 +6,14 @@ Classify the **presence of cardiovascular disease at medical examination** from 
 
 [Model and weights](https://huggingface.co/kiselyovd/cardio-risk-rf) · [Evaluation protocol](docs/EVALUATION.md) · [Русский](README.ru.md)
 
+[![Actual feature attribution from the 512-row validation sample](docs/images/social-preview.png)](https://kiselyovd.github.io/cardio-risk-rf/EVALUATION/)
+
+<!-- ARTIFACT-OVERVIEW:START -->
+LightGBM ROC-AUC **79.77%** · LightGBM average precision **78.11%**. [Evaluation and scope](https://github.com/kiselyovd/cardio-risk-rf/blob/main/reports/replay-native.json).
+
+**Evidence:** Replayed on the original 10501-row test fold, legacy seed42 protocol. Target is CVD presence at examination. The exact legacy split is 48999/10500/10501; original training row membership is unrecorded. Average precision uses sklearn AP.
+<!-- ARTIFACT-OVERVIEW:END -->
+
 ## Results
 
 <!-- ARTIFACT-MANIFEST:START -->
