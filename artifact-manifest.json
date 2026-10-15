@@ -4,7 +4,7 @@
   "hub": {
     "repo_id": "kiselyovd/cardio-risk-rf",
     "repo_type": "model",
-    "revision": "5b1c8af3f5afcf236db26fa303b7c7d0917dd191",
+    "revision": "a0117e88461cf4197a2a604203f68dde23fd069a",
     "files": [
       {
         "path": "cardio_risk_lgbm.joblib",
@@ -17,6 +17,11 @@
         "role": "weights",
         "variant": "baseline",
         "sha256": "eff065c65821d55059ac269c9dad644b34da5456f364020ccd13f22e15a9bb9b"
+      },
+      {
+        "path": "sklearn_model.joblib",
+        "role": "inference_alias",
+        "sha256": "a62a5872cf7f8ca117967a164f8de1cf53c83d1b4da03a9dbb636af93b98f6e3"
       }
     ]
   },

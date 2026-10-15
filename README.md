@@ -22,7 +22,7 @@ Classify the **presence of cardiovascular disease at medical examination** from 
 
 Target is CVD presence at examination. The exact legacy split is 48999/10500/10501; original training row membership is unrecorded. Average precision uses sklearn AP.
 
-[Evaluation record](https://github.com/kiselyovd/cardio-risk-rf/blob/main/reports/replay-native.json) · [Pinned model](https://huggingface.co/kiselyovd/cardio-risk-rf/tree/5b1c8af3f5afcf236db26fa303b7c7d0917dd191)
+[Evaluation record](https://github.com/kiselyovd/cardio-risk-rf/blob/main/reports/replay-native.json) · [Pinned model](https://huggingface.co/kiselyovd/cardio-risk-rf/tree/a0117e88461cf4197a2a604203f68dde23fd069a)
 <!-- ARTIFACT-MANIFEST:END -->
 
 The source CSV, exact row split, model hashes and prediction arrays accompany the [new replay](reports/replay-native.json). Average precision is the sklearn AP measure; thresholds use 0.5. This is a retrospective research classifier, with no prospective ten-year horizon or clinical validation.
@@ -38,7 +38,7 @@ import pandas as pd
 from huggingface_hub import hf_hub_download
 
 REPO = "kiselyovd/cardio-risk-rf"
-REVISION = "5b1c8af3f5afcf236db26fa303b7c7d0917dd191"
+REVISION = "a0117e88461cf4197a2a604203f68dde23fd069a"
 path = hf_hub_download(REPO, "cardio_risk_lgbm.joblib", revision=REVISION)
 with open(path, "rb") as stream:
     assert hashlib.file_digest(stream, "sha256").hexdigest() == "d0b96ed0fb1209be8ed73ebb41d41225d6d106c2f291a285c6c9fc8950a2ad39"

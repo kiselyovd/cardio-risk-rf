@@ -33,3 +33,5 @@ uv run --frozen python -m cardio_risk_rf.evaluation.replay --csv data/raw/cardio
 ```
 
 For already-downloaded canonical files, pass `--artifact-dir /path/to/model-files`. The runner checks CSV and model hashes, records source/package identities and stores anonymized probability/target arrays. Fresh preparation writes train/val/test Parquet plus a split manifest into an empty destination.
+
+Code fingerprints normalize CRLF to LF for portable source comparisons. Model, CSV and array digests always cover exact raw bytes.
