@@ -33,7 +33,7 @@
     "scope": "Target is CVD presence at examination. The exact legacy split is 48999/10500/10501; original training row membership is unrecorded. Average precision uses sklearn AP.",
     "training_membership_verified": false,
     "report": "reports/replay-native.json",
-    "report_sha256": "103443728a4039d5524a5eddf16ae4bd083a27b1ed6bbe3ee9ade2cad1726550",
+    "report_sha256": "c7207ce84db49fb9978a4efc2ff33e69bf54ff5c6d232e624820d09c9f679d4f",
     "metrics": [
       {
         "name": "LightGBM ROC-AUC",
