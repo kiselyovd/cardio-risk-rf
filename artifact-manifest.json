@@ -71,5 +71,34 @@
       "declared": "MIT",
       "scope": "author model declaration; dataset rights remain unspecified"
     }
+  },
+  "inference": {
+    "library": "scikit-learn Pipeline / LightGBM",
+    "input": {
+      "features": [
+        "age",
+        "gender",
+        "height",
+        "weight",
+        "ap_hi",
+        "ap_lo",
+        "cholesterol",
+        "gluc",
+        "smoke",
+        "alco",
+        "active"
+      ],
+      "age_unit": "rounded years, round(source_days / 365.25)",
+      "ordering": "exact listed feature order",
+      "missing_values": "main LightGBM native missing-value handling; baseline fitted median imputer"
+    },
+    "output": {
+      "classes": [
+        0,
+        1
+      ],
+      "positive_class": "CVD present at examination",
+      "score": "uncalibrated predict_proba[:,1]; no prospective time horizon"
+    }
   }
 }

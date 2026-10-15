@@ -29,6 +29,10 @@ def test_source_fingerprints_are_portable_across_checkout_line_endings(tmp_path:
 
 def test_native_scores_match_their_saved_arrays() -> None:
     manifest, _ = contract.validate(ROOT)
+    from cardio_risk_rf.data.cardio import FEATURES
+
+    assert manifest["inference"]["input"]["features"] == FEATURES
+    assert manifest["inference"]["output"]["classes"] == [0, 1]
     report = json.loads((ROOT / manifest["evaluation"]["report"]).read_text())
     path = ROOT / "reports" / report["prediction_arrays"]["file"]
     assert contract.digest(path) == report["prediction_arrays"]["sha256"]
